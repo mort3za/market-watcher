@@ -29,7 +29,6 @@ start();
 fastify.get("/compare", routeCompare);
 
 // app.use("/.netlify/functions/server", router); // path must route to lambda function
-// app.use("/", (req, res) => res.sendFile(path.join(__dirname, "../index.html")));
 
 module.exports = fastify;
 module.exports.handler = serverless(fastify);
