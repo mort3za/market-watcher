@@ -1,25 +1,35 @@
 "use strict";
-const express = require("express");
-var cors = require("cors");
-const path = require("path");
-const serverless = require("serverless-http");
-const app = express();
-const bodyParser = require("body-parser");
-const { routeCompare } = require("./routes/compare");
-
-const router = express.Router();
-router.get("/", (req, res) => {
-  res.json({ app: "running" });
-  res.end();
+const cors = require("cors");
+const isProduction = process.env.NODE_ENV === "production";
+const fastify = require("fastify")({
+  logger: !isProduction
+});
+fastify.use(cors());
+fastify.options("*", (request, reply) => {
+  reply.send();
 });
 
-router.get("/compare", routeCompare);
+const serverless = require("serverless-http");
+const { routeCompare } = require("./routes/compare");
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/.netlify/functions/server", router); // path must route to lambda function
-app.use("/", (req, res) => res.sendFile(path.join(__dirname, "../index.html")));
+fastify.get("/", async (request, reply) => {
+  return { app: "running" };
+});
 
-module.exports = app;
-module.exports.handler = serverless(app);
+const start = async () => {
+  try {
+    await fastify.listen(3000);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+start();
+
+fastify.get("/compare", routeCompare);
+
+// app.use("/.netlify/functions/server", router); // path must route to lambda function
+// app.use("/", (req, res) => res.sendFile(path.join(__dirname, "../index.html")));
+
+module.exports = fastify;
+module.exports.handler = serverless(fastify);

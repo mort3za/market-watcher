@@ -1,19 +1,17 @@
 const { compare } = require("../utils/compare");
 
-exports.routeCompare = async (req, res) => {
+exports.routeCompare = async (request, reply) => {
   let result;
   try {
     result = await compare();
 
-    res.json(result.data).end();
+    return result.data;
   } catch (error) {
-    onError(res, error);
+    onError(reply, error);
   }
 
   function onError(res, error) {
-    res
-      .status(400)
-      .json({ error: true, data: error })
-      .end();
+    reply.code(400);
+    return { error: true, data: error };
   }
 };
