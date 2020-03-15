@@ -10,7 +10,7 @@ fastify.options("*", (request, reply) => {
 });
 
 const serverless = require("serverless-http");
-const { routeCompare } = require("./routes/compare");
+const { watch } = require("./routes/watch.js");
 
 fastify.get("/", async (request, reply) => {
   return { app: "running" };
@@ -26,7 +26,7 @@ const start = async () => {
 };
 start();
 
-fastify.get("/compare", routeCompare);
+fastify.get("/watch", watch);
 
 // app.use("/.netlify/functions/server", router); // path must route to lambda function
 
