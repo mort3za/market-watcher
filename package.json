@@ -3,22 +3,21 @@
   "version": "0.0.2",
   "main": "functions/server.js",
   "scripts": {
-    "build": "netlify-lambda build express",
+    "build": "netlify-lambda build fastify",
     "start": "nodemon server-local.js"
   },
-  "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "date-fns": "^2.13.0",
-    "fastify": "^2.12.1",
+    "fastify": "^2.14.1",
     "lodash": "^4.17.15",
     "pino-pretty": "^4.0.0"
   },
   "devDependencies": {
     "dotenv": "~8.2.0",
     "netlify-lambda": "~1.6.3",
-    "nodemon": "~2.0.2",
-    "serverless-http": "~2.3.2"
+    "nodemon": "~2.0.4",
+    "serverless-http": "~2.4.1"
   }
 }
