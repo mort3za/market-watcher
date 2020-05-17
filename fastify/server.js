@@ -1,3 +1,25 @@
+// https://lambda-twatcher.netlify.com/.netlify/functions/server/watch
+
+/*
+
++---------------+
+| Server.js     |    +-----------------+  +----------------+  +-----------------+ +-------------------+
++---------------+    | Watch.js        |  | trading tools  |  | gold extractor  | | Notifiers         |
+|               |    +-----------------+  +----------------+  +-----------------+ +-------------------+
+| /watch ----------> |                 |  |                |  |                 | |                   |
+|               |    | watch()         |  | latestTrades   |  | analyze         | | sendNotifications |
+|               |    |                 |  |                |  |                 | |                   |
+|               |    |                 |  |                |  |                 | |                   |
+|               |    |                 |  |                |  |                 | |                   |
+|               |    +---------------+-+  +---^------------+  +---^-------------+ +--^----------------+
+|               |                    |        |                   |                  |
+|               |                    |        |                   |                  |
++---------------+                    |        |                   |                  |
+                                     +--------+-------------------+------------------+
+
+
+*/
+
 "use strict";
 const cors = require("cors");
 const isProduction = process.env.NODE_ENV === "production";
@@ -18,7 +40,7 @@ fastify.get("/", async (request, reply) => {
 
 const start = async () => {
   try {
-    await fastify.listen(3000);
+    await fastify.listen(4000);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

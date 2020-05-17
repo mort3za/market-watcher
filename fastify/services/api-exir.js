@@ -1,3 +1,4 @@
+// https://apidocs.exir.io/#public
 const { ajax } = require("../utils/ajax.js");
 
 exports.service = {
