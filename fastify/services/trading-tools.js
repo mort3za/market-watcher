@@ -1,22 +1,30 @@
 const serviceExir = require("./api-exir.js").service;
-const { biggerThan } = require("../utils/helper-trades.js");
+const { addPriceUSD, addTotalPriceUSD, filterIneffectivePrices, filterIneffectiveDates } = require("../utils/helper-trades.js");
 const adapterExir = require("../adapters/exir.js").adapter;
 
-exports.service = {
+const service = {
   async latestTrades() {
     const symbol = "btc-tmn";
     let result;
     try {
       result = await serviceExir.trades(symbol);
+      result = result[symbol];
     } catch (error) {
       throw error;
     }
-    result = result[symbol];
     result = adapterExir.trades(result, symbol);
-    console.log("result", result);
+    result = await addPriceUSD(result);
+    result = await addTotalPriceUSD(result);
+    result = await filterIneffectivePrices(result);
+    console.log('===============================ys????????');
+    
+    result = await filterIneffectiveDates(result);
+    console.log("result after =========== ", result.slice(0, 3));
 
-    const one_milion = 1000000;
-    result = biggerThan(result, one_milion);
     return result;
-  }
+  },
+
+  
 };
+
+exports.service = service;
