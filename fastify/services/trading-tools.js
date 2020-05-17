@@ -16,10 +16,8 @@ const service = {
     result = await addPriceUSD(result);
     result = await addTotalPriceUSD(result);
     result = await filterIneffectivePrices(result);
-    console.log('===============================ys????????');
-    
     result = await filterIneffectiveDates(result);
-    console.log("result after =========== ", result.slice(0, 3));
+    console.log("result after filters =========== ", result);
 
     return result;
   },

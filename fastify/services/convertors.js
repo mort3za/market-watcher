@@ -1,7 +1,7 @@
-const { get_usd_tmn } = require("../services/api-tgju.js").service;
+const { get_usd_tmn_rate } = require("../services/api-tgju.js").service;
 
 async function tmn_to_usd(tmn = 0) {
-  const rate = await get_usd_tmn();
+  const rate = await get_usd_tmn_rate();
   return tmn / rate;
 }
 
