@@ -4,9 +4,10 @@ exports.adapter = {
   trades(values) {
     return values.map((value) => {
       return {
+        apiName: "exir",
+        type: value.side,
         amount: value.size,
         price: value.price,
-        type: value.side,
         timestamp: new Date(value.timestamp).getTime(),
         total_price: value.price * value.size,
       };

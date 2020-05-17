@@ -7,9 +7,10 @@ exports.adapter = {
       // rial to toman
       const price = irr_to_tmn(value.price);
       return {
+        apiName: 'nobitex',
+        type: value.type,
         amount: value.volume,
         price,
-        type: value.type,
         timestamp: new Date(value.time).getTime(),
         total_price: price * value.volume,
       };

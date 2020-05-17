@@ -16,7 +16,7 @@ const service = {
       exir: await _get_exir_trades_filtered(symbolSrc, symbolDst),
       nobitex: await _get_nobitex_trades_filtered(symbolSrc, symbolDst),
     };
-    console.log("result ====================>", result);
+    // console.log("result ====================>", result);
 
     return result;
   },
@@ -37,8 +37,8 @@ async function _get_exir_trades_filtered(src, dst) {
   result = await addPriceUSD(result);
   result = await addTotalPriceUSD(result);
 
-  result = await filterIneffectivePrices(result);
-  result = await filterIneffectiveDates(result);
+  // result = await filterIneffectivePrices(result);
+  // result = await filterIneffectiveDates(result);
 
   return result;
 }
@@ -59,8 +59,8 @@ async function _get_nobitex_trades_filtered(src, dst) {
   result = await addPriceUSD(result);
   result = await addTotalPriceUSD(result);
 
-  result = await filterIneffectivePrices(result);
-  result = await filterIneffectiveDates(result);
+  // result = await filterIneffectivePrices(result);
+  // result = await filterIneffectiveDates(result);
 
   return result;
 }

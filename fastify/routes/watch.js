@@ -7,10 +7,14 @@ exports.watch = async (request, reply) => {
   let result;
   try {
     const trades = await latestTrades();
-    const { hasGold, report } = await analyze({ trades });
+    const { hasGold, goldItems } = await analyze({ trades });
     if (hasGold) {
-      const textReport = toTextMultiline(report);
-      await sendNotifications({ telegram: true, text: textReport });
+      goldItems.forEach((goldItem) => {
+        const textReport = toTextMultiline(goldItem);
+        console.log('textReport', textReport);
+        
+        sendNotifications({ telegram: true, text: textReport });
+      });
     }
     result = { error: false, data: { hasGold } };
   } catch (error) {
