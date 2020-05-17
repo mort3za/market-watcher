@@ -1,7 +1,7 @@
 const currencies = require("./currencies.js").adapter;
 
 exports.adapter = {
-  trades(values, source, destination) {
+  trades(values, symbol) {
     return values.map((value) => {
       return {
         amount: value.size,
@@ -9,15 +9,15 @@ exports.adapter = {
         type: value.side,
         timestamp: new Date(value.timestamp).getTime(),
         total_price: value.price * value.size,
-        source_currency: source,
-        destination_currency: destination,
+        source_currency: currencies.name(symbol.split("-")[0]),
+        destination_currency: currencies.name(symbol.split("-")[1]),
       };
     });
   },
 
-  orderbook(response, symbol = 'btc') {
-    const bids = response[symbol].bids;
-    const asks = response[symbol].asks;
+  orderbook(response) {
+    const bids = response.bids;
+    const asks = response.asks;
     return { bids, asks };
   },
 };
