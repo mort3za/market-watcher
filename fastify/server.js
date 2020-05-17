@@ -39,8 +39,12 @@
 "use strict";
 const cors = require("cors");
 const isProduction = process.env.NODE_ENV === "production";
+const log = require("pino")({
+  level: "info",
+  prettyPrint: true,
+});
 const fastify = require("fastify")({
-  logger: !isProduction
+  logger: !isProduction ? log : false,
 });
 fastify.use(cors());
 fastify.options("*", (request, reply) => {

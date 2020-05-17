@@ -1,16 +1,17 @@
 const currencies = require("./currencies.js").adapter;
+const { irr_to_tmn } = require("../services/convertors.js").service;
 
 exports.adapter = {
-  trades(values, symbol) {
+  trades(values) {
     return values.map((value) => {
+      // rial to toman
+      const price = irr_to_tmn(value.price);
       return {
-        amount: value.size,
-        price: value.price,
-        type: value.side,
-        timestamp: new Date(value.timestamp).getTime(),
-        total_price: value.price * value.size,
-        source_currency: currencies.name(symbol.split("-")[0]),
-        destination_currency: currencies.name(symbol.split("-")[1]),
+        amount: value.volume,
+        price,
+        type: value.type,
+        timestamp: new Date(value.time).getTime(),
+        total_price: price * value.volume,
       };
     });
   },

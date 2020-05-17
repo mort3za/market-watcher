@@ -5,8 +5,13 @@ async function tmn_to_usd(tmn = 0) {
   return tmn / rate;
 }
 
+function irr_to_tmn(irr = 0) {
+  return irr / 10;
+}
+
 const service = {
   tmn_to_usd,
+  irr_to_tmn,
 };
 
 exports.service = service;

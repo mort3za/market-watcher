@@ -1,15 +1,20 @@
 const dictionary = {
   btc: ["bitcoin", "btc"],
-  tmn: ["toman", "tooman", "toomaan", "tmn"],
+  tmn: ["toman", "tooman", "toomaan", "tmn", "irt"],
 };
 
 const adapter = {
-  normalizeName(currency) {
+  normalizeName(currency, { useIRT = false } = {}) {
     let result = "";
     for (const [key, value] of Object.entries(dictionary)) {
       if (value.includes(currency.toLowerCase())) {
         result = key;
       }
+    }
+
+    // replace tmn with irt
+    if (result === "tmn" && useIRT) {
+      result = "irt";
     }
     return result;
   },
@@ -29,22 +34,27 @@ const adapter = {
   },
 
   // format options: AB, a-b
-  exchangeSymbol(source, destination, format) {
+  exchangeSymbol(source, destination, format, { useIRT = false } = {}) {
+    const normalizeOptions = { useIRT };
     switch (format) {
       case "a-b":
-        return `${adapter.normalizeName(source)}-${adapter.normalizeName(
-          destination
-        )}`;
+        return `${adapter.normalizeName(
+          source,
+          normalizeOptions
+        )}-${adapter.normalizeName(destination, normalizeOptions)}`;
         break;
       case "AB":
         return `${adapter
-          .normalizeName(source)
-          .toUpperCase()}${adapter.normalizeName(destination).toUpperCase()}`;
+          .normalizeName(source, normalizeOptions)
+          .toUpperCase()}${adapter
+          .normalizeName(destination, normalizeOptions)
+          .toUpperCase()}`;
 
       default:
-        return `${adapter.normalizeName(source)}-${adapter.normalizeName(
-          destination
-        )}`;
+        return `${adapter.normalizeName(
+          source,
+          normalizeOptions
+        )}-${adapter.normalizeName(destination, normalizeOptions)}`;
         break;
     }
   },
