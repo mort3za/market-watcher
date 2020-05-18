@@ -9,6 +9,7 @@
   "dependencies": {
     "aws-lambda-fastify": "^1.4.3",
     "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "date-fns": "^2.13.0",
     "express": "^4.17.1",
@@ -16,7 +17,7 @@
     "lodash": "^4.17.15",
     "netlify-lambda": "~1.6.3",
     "pino-pretty": "^4.0.0",
-    "serverless-http": "~2.4.1"
+    "serverless-http": "^2.4.1"
   },
   "devDependencies": {
     "dotenv": "~8.2.0",

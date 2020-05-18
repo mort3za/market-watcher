@@ -8,7 +8,6 @@ exports.watch = async (request, reply) => {
   try {
     const trades = await latestTrades();
     const { hasGold, goldItems } = await analyze({ trades });
-    console.log('after analyze');
     
     if (hasGold) {
       goldItems.forEach((goldItem) => {
@@ -24,7 +23,7 @@ exports.watch = async (request, reply) => {
     
     result = onError(reply, error);
   }
-  return reply.json(result);
+  return reply.json(result).end();
 
   function onError(res, error) {
     reply.status(400);
