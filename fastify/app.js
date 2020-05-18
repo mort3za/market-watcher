@@ -55,14 +55,15 @@ function init() {
   return app;
 }
 
-if (require.main === module) {
-  // called directly i.e. "node app"
-  init().listen(4000, (err) => {
-    if (err) console.error(err);
-    console.log("server listening on 4000");
-  });
-} else {
-  // required as a module => executed on aws lambda
-  module.exports = init;
-  module.exports.handler = serverless(init);
-}
+const initializedApp = init();
+
+module.exports = initializedApp;
+module.exports.handler = serverless(initializedApp);
+
+// if (require.main === module) {
+//   // called directly i.e. "node app"
+//   init().listen(4000, (err) => {
+//     if (err) console.error(err);
+//     console.log("server listening on 4000");
+//   });
+// }
