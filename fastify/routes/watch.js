@@ -1,7 +1,7 @@
 const { latestTrades } = require("../services/trading-tools.js").service;
 const { sendNotifications } = require("../services/notifiers.js").service;
 const { analyze } = require("../services/analyzers.js").service;
-const { toTextMultiline } = require("../services/report-formatter.js").service;
+const { toTextMultiline } = require("../services/formatter-report.js").service;
 
 exports.watch = async (request, reply) => {
   let result;

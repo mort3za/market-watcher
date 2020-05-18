@@ -5,12 +5,12 @@ exports.service = {
   base_url: `https://api.telegram.org/bot${API_KEY_TELEGRAM}`,
 
   async sendMessage({ text, chat_id }) {
-    const encodedText = encodeURI(text);
     return ajax({
       method: "GET",
       url: `${this.base_url}/sendMessage`,
       params: {
-        text: encodedText,
+        parse_mode: 'HTML',
+        text,
         chat_id,
       },
     });

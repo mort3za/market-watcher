@@ -9,7 +9,6 @@ exports.service = {
           text,
           chat_id: TELEGRAM_NOTIFY_GROUP_CHAT_ID,
         });
-        console.log("sent?!!!!!!");
       } catch (error) {
         console.log("error", error);
       }

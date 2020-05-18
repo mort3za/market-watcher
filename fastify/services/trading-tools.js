@@ -36,11 +36,10 @@ async function _get_exir_trades_filtered(src, dst) {
   // TODO: move to adapter exir
   result = await addPriceUSD(result);
   result = await addTotalPriceUSD(result);
-  console.log('exir items count:', result.length);
-  
+  // console.log('exir items count:', result.length);
 
-  // result = await filterIneffectivePrices(result);
-  // result = await filterIneffectiveDates(result);
+  result = await filterIneffectivePrices(result);
+  result = await filterIneffectiveDates(result);
 
   return result;
 }
@@ -60,10 +59,10 @@ async function _get_nobitex_trades_filtered(src, dst) {
   // TODO: move to adapter nobitex
   result = await addPriceUSD(result);
   result = await addTotalPriceUSD(result);
-  console.log('nobitex items count:', result.length);
+  // console.log('nobitex items count:', result.length);
 
-  // result = await filterIneffectivePrices(result);
-  // result = await filterIneffectiveDates(result);
+  result = await filterIneffectivePrices(result);
+  result = await filterIneffectiveDates(result);
 
   return result;
 }
