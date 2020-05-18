@@ -4,7 +4,7 @@
   "main": "functions/server.js",
   "scripts": {
     "build": "netlify-lambda build fastify",
-    "start": "nodemon ./fastify/app.js"
+    "start": "nodemon ./server-local.js"
   },
   "dependencies": {
     "aws-lambda-fastify": "^1.4.3",

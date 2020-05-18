@@ -34,7 +34,6 @@
                                           |                |
                                           +----------------+
 
-
 */
 
 "use strict";
@@ -46,22 +45,14 @@ const { watch } = require("./routes/watch.js");
 
 const app = express();
 const router = express.Router();
-router.get("/", (request, reply) => reply.json({ hello: "world" }).end());
+router.get("/", (request, reply) => reply.json({ hello: "world!" }).end());
 router.get("/watch", watch);
-
-app.use("/.netlify/functions/app", router); // path must route to lambda
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/.netlify/functions/app", router); // path must route to lambda
+
 module.exports = app;
 module.exports.handler = serverless(app);
-
-// if (require.main === module) {
-//   // called directly i.e. "node app"
-//   init().listen(4000, (err) => {
-//     if (err) console.error(err);
-//     console.log("server listening on 4000");
-//   });
-// }
