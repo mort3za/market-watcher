@@ -1,4 +1,5 @@
-const formatDate = require("date-fns/format");
+const datefns = require("date-fns");
+const datefnsTz = require("date-fns-tz");
 
 exports.service = {
   toTextMultiline({ buyItem, sellItem, percentDiff }) {
@@ -10,7 +11,10 @@ exports.service = {
       `Sell to ${buyItem.apiName} ${moneyFormatter(buyItem.price)}\n` +
       `You can trade at least ${moneyFormatter(totalPriceMin)}\n` +
       `Difference is ${percentDiff.toFixed(2)}%\n` +
-      `<code>${formatDate(buyItem.timestamp, "MM/dd kk:mm")}</code>\n` +
+      `<code>${datefns.format(
+        datefnsTz.utcToZonedTime(buyItem.timestamp, "Asia/Tehran"),
+        "MM/dd kk:mm"
+      )}</code>\n` +
       `${importanceEmoji}`
     );
   },
