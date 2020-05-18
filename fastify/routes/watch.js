@@ -8,22 +8,26 @@ exports.watch = async (request, reply) => {
   try {
     const trades = await latestTrades();
     const { hasGold, goldItems } = await analyze({ trades });
+    console.log('after analyze');
+    
     if (hasGold) {
       goldItems.forEach((goldItem) => {
         const textReport = toTextMultiline(goldItem);
         console.log('textReport', textReport);
         
-        sendNotifications({ telegram: true, text: textReport });
+        // sendNotifications({ telegram: true, text: textReport });
       });
     }
     result = { error: false, data: { hasGold } };
   } catch (error) {
+    console.log('error', error);
+    
     result = onError(reply, error);
   }
-  return result;
+  return reply.json(result);
 
   function onError(res, error) {
-    reply.code(400);
+    reply.status(400);
     return { error: true, data: error };
   }
 };

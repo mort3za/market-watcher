@@ -38,12 +38,12 @@
 */
 
 "use strict";
-const fastify = require('fastify');
+const express = require('express');
 const { watch } = require("./routes/watch.js");
 
 function init() {
-  const app = fastify();
-  app.get('/', (request, reply) => reply.send({ hello: 'world' }));
+  const app = express();
+  app.get('/', (request, reply) => reply.json({ hello: 'world' }));
   app.get("/watch", watch);
   return app;
 }
