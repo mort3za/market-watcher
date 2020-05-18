@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "main": "functions/server.js",
   "scripts": {
-    "build": "./node_modules/netlify-lambda/bin/cmd.js build fastify",
+    "build": "ls node_modules && netlify-lambda build fastify",
     "start": "nodemon server-local.js"
   },
   "dependencies": {
@@ -12,12 +12,12 @@
     "date-fns": "^2.13.0",
     "fastify": "^2.14.1",
     "lodash": "^4.17.15",
-    "pino-pretty": "^4.0.0"
+    "pino-pretty": "^4.0.0",
+    "netlify-lambda": "~1.6.3",
+    "serverless-http": "~2.4.1"
   },
   "devDependencies": {
     "dotenv": "~8.2.0",
-    "netlify-lambda": "~1.6.3",
-    "nodemon": "~2.0.4",
-    "serverless-http": "~2.4.1"
+    "nodemon": "~2.0.4"
   }
 }
