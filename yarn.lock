@@ -1184,6 +1184,11 @@ avvio@^6.3.1:
     debug "^4.0.0"
     fastq "^1.6.0"
 
+aws-lambda-fastify@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/aws-lambda-fastify/-/aws-lambda-fastify-1.4.3.tgz#6f14137feafa5d8d8e22f58674d69de69cb0f8a2"
+  integrity sha512-lKCHtzrGLeQCJc93og0B1wR0zdBqZd9QOCr27uIbcKLu4u70WLCtoDfdAPkdzY/aQIEQilXNIoUDqfVKK7B8hg==
+
 axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"

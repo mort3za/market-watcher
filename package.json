@@ -3,17 +3,18 @@
   "version": "0.0.2",
   "main": "functions/server.js",
   "scripts": {
-    "build": "ls node_modules && netlify-lambda build fastify",
-    "start": "nodemon server-local.js"
+    "build": "netlify-lambda build fastify",
+    "start": "nodemon ./fastify/app.js"
   },
   "dependencies": {
+    "aws-lambda-fastify": "^1.4.3",
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "date-fns": "^2.13.0",
     "fastify": "^2.14.1",
     "lodash": "^4.17.15",
-    "pino-pretty": "^4.0.0",
     "netlify-lambda": "~1.6.3",
+    "pino-pretty": "^4.0.0",
     "serverless-http": "~2.4.1"
   },
   "devDependencies": {
