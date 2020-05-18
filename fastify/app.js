@@ -49,6 +49,7 @@ function init() {
 }
 
 module.exports = init;
+module.exports.handler = init;
 
 // if (require.main === module) {
 //   // called directly i.e. "node app"
