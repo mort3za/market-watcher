@@ -1,13 +1,11 @@
 {
-  "name": "lambda-twatcher",
+  "name": "twatcher",
   "version": "0.0.2",
-  "main": "functions/server.js",
+  "main": "api/app.js",
   "scripts": {
-    "build": "netlify-lambda build fastify",
     "start": "nodemon ./server-local.js"
   },
   "dependencies": {
-    "aws-lambda-fastify": "^1.4.3",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -22,5 +20,8 @@
   "devDependencies": {
     "dotenv": "~8.2.0",
     "nodemon": "~2.0.4"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }

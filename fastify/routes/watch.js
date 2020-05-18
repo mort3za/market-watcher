@@ -14,16 +14,15 @@ exports.watch = async (request, reply) => {
         const textReport = toTextMultiline(goldItem);
         console.log('textReport', textReport);
         
-        // sendNotifications({ telegram: true, text: textReport });
+        sendNotifications({ telegram: true, text: textReport });
       });
     }
     result = { error: false, data: { hasGold } };
   } catch (error) {
     console.log('error', error);
-    
     result = onError(reply, error);
   }
-  return reply.json(result).end();
+  return reply.send(result);
 
   function onError(res, error) {
     reply.status(400);

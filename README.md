@@ -3,4 +3,4 @@
 [![Deploy to
 Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/mort3za/twatcher)
 
-Hosted at `/.netlify/functions/server`.
+Hosted at `/.netlify/api/app`.

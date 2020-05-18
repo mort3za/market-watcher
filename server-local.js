@@ -1,9 +1,7 @@
-'use strict';
+"use strict";
 
-require('dotenv').config()
+require("dotenv").config();
 
-const app = require('./fastify/app');
-console.log('app', app);
+const app = require("./api/index")();
 
-
-app.listen(4000, () => console.log('Local app listening on port 4000!'));
+app.listen(4000, () => console.log("http://localhost:4000"));
