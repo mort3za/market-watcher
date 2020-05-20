@@ -1,18 +1,26 @@
 const sortBy = require("lodash/sortBy");
 
 exports.service = {
-  async analyze({ trades }) {
-    let buysExir = trades.exir.filter((trade) => trade.type === "buy");
-    buysExir = sortBy(buysExir, "price").reverse();
+  async analyze({ orders }) {
+    let buysExir = [];
+    let sellsExir = [];
+    try {
+      buysExir = orders.exir.filter((trade) => trade.type === "buy");
+      buysExir = sortBy(buysExir, "price").reverse();
 
-    let sellsExir = trades.exir.filter((trade) => trade.type === "sell");
-    sellsExir = sortBy(sellsExir, "price");
+      sellsExir = orders.exir.filter((trade) => trade.type === "sell");
+      sellsExir = sortBy(sellsExir, "price");
+    } catch (error) {}
 
-    let buysNobitex = trades.nobitex.filter((trade) => trade.type === "buy");
-    buysNobitex = sortBy(buysNobitex, "price").reverse();
+    let buysNobitex = [];
+    let sellsNobitex = [];
+    try {
+      buysNobitex = orders.nobitex.filter((trade) => trade.type === "buy");
+      buysNobitex = sortBy(buysNobitex, "price").reverse();
 
-    let sellsNobitex = trades.nobitex.filter((trade) => trade.type === "sell");
-    sellsNobitex = sortBy(sellsNobitex, "price");
+      sellsNobitex = orders.nobitex.filter((trade) => trade.type === "sell");
+      sellsNobitex = sortBy(sellsNobitex, "price");
+    } catch (error) {}
 
     const buyExirHead = buysExir[0];
     const buyNobitexHead = buysNobitex[0];

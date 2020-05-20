@@ -1,4 +1,4 @@
-const { latestTrades } = require("../services/trading-tools.js").service;
+const { latest_trades, latest_orderbooks } = require("../services/trading-tools.js").service;
 const { sendNotifications } = require("../services/notifiers.js").service;
 const { analyze } = require("../services/analyzers.js").service;
 const { toTextMultiline } = require("../services/formatter-report.js").service;
@@ -6,8 +6,10 @@ const { toTextMultiline } = require("../services/formatter-report.js").service;
 exports.watch = async (request, reply) => {
   let result;
   try {
-    const trades = await latestTrades();
-    const { hasGold, goldItems } = await analyze({ trades });
+    // const orders = await latest_trades();
+    // const { hasGold, goldItems } = await analyze({ orders });
+    const orders = await latest_orderbooks();
+    const { hasGold, goldItems } = await analyze({ orders });
     
     if (hasGold) {
       goldItems.forEach((goldItem) => {

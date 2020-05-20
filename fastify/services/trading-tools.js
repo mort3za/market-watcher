@@ -11,16 +11,63 @@ const adapterExir = require("../adapters/exir.js").adapter;
 const adapterNobitex = require("../adapters/nobitex.js").adapter;
 
 const service = {
-  async latestTrades(symbolSrc = "btc", symbolDst = "tmn") {
+  // trades
+  async latest_trades(symbolSrc = "btc", symbolDst = "tmn") {
     const result = {
       exir: await _get_exir_trades_filtered(symbolSrc, symbolDst),
       nobitex: await _get_nobitex_trades_filtered(symbolSrc, symbolDst),
     };
-    // console.log("result ====================>", result);
+    return result;
+  },
 
+  // orderbook
+  async latest_orderbooks(symbolSrc = "btc", symbolDst = "tmn") {
+    const result = {
+      exir: await _get_exir_orderbook_filtered(symbolSrc, symbolDst),
+      nobitex: await _get_nobitex_orderbook_filtered(symbolSrc, symbolDst),
+    };
     return result;
   },
 };
+
+// ---------------------------------------------------------------------------------
+// private functions
+// ---------------------------------------------------------------------------------
+async function _get_exir_orderbook_filtered(src, dst) {
+  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
+
+  let result;
+  try {
+    result = await serviceExir.fetch_orderbooks(symbol);
+    result = adapterExir.orderbook(result, symbol);
+  } catch (error) {
+    throw error;
+  }
+
+  result = await addPriceUSD(result);
+  result = await addTotalPriceUSD(result);
+
+  return result;
+}
+
+async function _get_nobitex_orderbook_filtered(src, dst) {
+  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB", {
+    useIRT: true,
+  });
+
+  let result;
+  try {
+    result = await serviceNobitex.fetch_orderbooks(symbol);
+    result = adapterNobitex.orderbook(result, symbol);
+  } catch (error) {
+    throw error;
+  }
+
+  result = await addPriceUSD(result);
+  result = await addTotalPriceUSD(result);
+
+  return result;
+}
 
 async function _get_exir_trades_filtered(src, dst) {
   const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
@@ -33,7 +80,6 @@ async function _get_exir_trades_filtered(src, dst) {
     throw error;
   }
 
-  // TODO: move to adapter exir
   result = await addPriceUSD(result);
   result = await addTotalPriceUSD(result);
   // console.log('exir items count:', result.length);
