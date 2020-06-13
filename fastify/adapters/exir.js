@@ -14,7 +14,9 @@ exports.adapter = {
     });
   },
 
-  orderbook(response, symbol = "btc-tmn") {
+  orderbook(response, symbol = "btc-irt") {
+    console.log('response', response);
+    
     const bids = response[symbol].bids || [];
     const asks = response[symbol].asks || [];
     const now = new Date().getTime();
