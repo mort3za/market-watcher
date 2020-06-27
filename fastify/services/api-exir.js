@@ -4,7 +4,7 @@ const { ajax } = require("../utils/ajax.js");
 exports.service = {
   base_url: "https://api.exir.io/v1",
   // ticker is last price traded
-  async fetch_ticker(symbol = "btc-tmn") {
+  async fetch_ticker(symbol = "btc-irt") {
     return ajax({
       method: "GET",
       url: `${this.base_url}/ticker`,
@@ -16,9 +16,7 @@ exports.service = {
     //   ticker: 50000000,
     // };
   },
-  async fetch_orderbooks(symbol = "btc-tmn") {
-    console.log('base_url', this.base_url);
-    
+  async fetch_orderbooks(symbol = "btc-irt") {
     return ajax({
       method: "GET",
       url: `${this.base_url}/orderbooks`,

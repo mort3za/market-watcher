@@ -2,11 +2,12 @@ const datefns = require("date-fns");
 const datefnsTz = require("date-fns-tz");
 
 exports.service = {
-  toTextMultiline({ buyItem, sellItem, percentDiff }) {
+  toTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
     const totalPriceMin = Math.min(buyItem.total_price, sellItem.total_price);
     const importanceEmoji = "🔥".repeat(parseInt(percentDiff));
 
     return (
+      `<b>${currency.toUpperCase()}</b>\n` +
       `Buy from ${sellItem.apiName} ${moneyFormatter(sellItem.price)}\n` +
       `Sell to ${buyItem.apiName} ${moneyFormatter(buyItem.price)}\n` +
       `You can trade at least ${moneyFormatter(totalPriceMin)}\n` +

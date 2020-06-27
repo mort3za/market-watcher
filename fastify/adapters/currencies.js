@@ -11,6 +11,9 @@ const adapter = {
         result = key;
       }
     }
+    if (!result) {
+      result = currency;
+    }
 
     return result;
   },

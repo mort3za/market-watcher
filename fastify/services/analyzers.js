@@ -1,7 +1,7 @@
 const sortBy = require("lodash/sortBy");
 
 exports.service = {
-  async analyze({ orders }) {
+  analyze({ orders, currency }) {
     // exir
     let buysExir = [];
     let sellsExir = [];
@@ -33,14 +33,14 @@ exports.service = {
     // console.log(buyExirHead, buyNobitexHead, sellExirHead, sellNobitexHead);
 
     let hasGold = false;
-    let goldItems = [];
+    let targetTrades = [];
     const threshold = parseFloat(process.env.GOLD_THRESHOLD_PERCENT);
 
     if (buyExirHead && sellNobitexHead) {
       const priceDiff = buyExirHead.price - sellNobitexHead.price;
       const percentDiff = (priceDiff / buyExirHead.price) * 100;
       if (percentDiff > threshold) {
-        goldItems.push({
+        targetTrades.push({
           buyItem: buyExirHead,
           sellItem: sellNobitexHead,
           percentDiff,
@@ -52,7 +52,7 @@ exports.service = {
       const priceDiff = buyNobitexHead.price - sellExirHead.price;
       const percentDiff = (priceDiff / buyNobitexHead.price) * 100;
       if (percentDiff > threshold) {
-        goldItems.push({
+        targetTrades.push({
           buyItem: buyNobitexHead,
           sellItem: sellExirHead,
           percentDiff,
@@ -62,8 +62,9 @@ exports.service = {
     }
 
     return {
-      goldItems,
+      targetTrades,
       hasGold,
+      currency
     };
   },
 };

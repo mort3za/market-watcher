@@ -12,8 +12,9 @@ const adapterNobitex = require("../adapters/nobitex.js").adapter;
 
 const service = {
   // trades
-  async latest_trades(symbolSrc = "btc", symbolDst = "tmn") {
+  async latest_trades(symbolSrc = "btc", symbolDst = "irt") {
     const result = {
+      symbol: symbolSrc,
       exir: await _get_exir_trades_filtered(symbolSrc, symbolDst),
       nobitex: await _get_nobitex_trades_filtered(symbolSrc, symbolDst),
     };
@@ -21,8 +22,9 @@ const service = {
   },
 
   // orderbook
-  async latest_orderbooks(symbolSrc = "btc", symbolDst = "tmn") {
+  async latest_orderbooks(symbolSrc = "btc", symbolDst = "irt") {
     const result = {
+      symbol: symbolSrc,
       exir: await _get_exir_orderbook_filtered(symbolSrc, symbolDst),
       nobitex: await _get_nobitex_orderbook_filtered(symbolSrc, symbolDst),
     };
