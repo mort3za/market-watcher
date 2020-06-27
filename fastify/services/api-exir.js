@@ -55,7 +55,7 @@ exports.service = {
     //   },
     // };
   },
-  async fetch_trades(symbol = "btc-tmn") {
+  async fetch_trades(symbol = "btc-irt") {
     return ajax({
       method: "GET",
       url: `${this.base_url}/trades`,

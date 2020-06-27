@@ -1,4 +1,4 @@
-const { tmn_to_usd } = require("../services/convertors.js").service;
+const { irt_to_usd } = require("../services/convertors.js").service;
 
 exports.biggerThan = (orders, price = 0) => {
   const result = orders.filter((trade) => trade.price * trade.size > price);
@@ -8,7 +8,7 @@ exports.biggerThan = (orders, price = 0) => {
 exports.addPriceUSD = async (orders) => {
   return await Promise.all(
     orders.map(async (trade) => {
-      trade.price_usd = await tmn_to_usd(trade.price);
+      trade.price_usd = await irt_to_usd(trade.price);
       return trade;
     })
   );
@@ -17,7 +17,7 @@ exports.addPriceUSD = async (orders) => {
 exports.addTotalPriceUSD = async (orders) => {
   return await Promise.all(
     orders.map(async (trade) => {
-      trade.total_price_usd = await tmn_to_usd(trade.total_price);
+      trade.total_price_usd = await irt_to_usd(trade.total_price);
       return trade;
     })
   );

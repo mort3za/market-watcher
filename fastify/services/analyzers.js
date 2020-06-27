@@ -34,7 +34,7 @@ exports.service = {
 
     let hasGold = false;
     let targetTrades = [];
-    const threshold = parseFloat(process.env.GOLD_THRESHOLD_PERCENT);
+    const threshold = parseFloat(process.env.TARGET_THRESHOLD_PERCENT);
 
     if (buyExirHead && sellNobitexHead) {
       const priceDiff = buyExirHead.price - sellNobitexHead.price;

@@ -1,10 +1,10 @@
-const { irr_to_tmn } = require("../services/convertors.js").service;
+const { irr_to_irt } = require("../services/convertors.js").service;
 
 exports.adapter = {
   trades(values = []) {
     return values.map((value) => {
       // rial to toman
-      const price = irr_to_tmn(value.price);
+      const price = irr_to_irt(value.price);
       return {
         apiName: "nobitex",
         type: value.type,
@@ -25,9 +25,9 @@ exports.adapter = {
       return {
         apiName: "nobitex",
         type: "sell",
-        price: irr_to_tmn(value[0]),
+        price: irr_to_irt(value[0]),
         amount: value[1],
-        total_price: irr_to_tmn(value[0] * value[1]),
+        total_price: irr_to_irt(value[0] * value[1]),
         timestamp: now,
       };
     });
@@ -35,9 +35,9 @@ exports.adapter = {
       return {
         apiName: "nobitex",
         type: "buy",
-        price: irr_to_tmn(value[0]),
+        price: irr_to_irt(value[0]),
         amount: value[1],
-        total_price: irr_to_tmn(value[0] * value[1]),
+        total_price: irr_to_irt(value[0] * value[1]),
         timestamp: now,
       };
     });

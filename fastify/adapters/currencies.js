@@ -5,7 +5,7 @@ const dictionary = {
   xmr: ["xmr", "monero"],
   xlm: ["xlm", "stellar"],
   bch: ["bch", "bitcoin-cash"],
-  irt: ["toman", "tooman", "toomaan", "tmn", "irt"],
+  irt: ["irt", "toman", "tooman", "toomaan", "tuman", "tumaan", "tmn"],
 };
 
 const adapter = {
