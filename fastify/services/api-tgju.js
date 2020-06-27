@@ -12,7 +12,7 @@ exports.service = {
     if (isBefore(last_update, one_hour_ago)) {
       global.app_tgju_last_update_ms = now.getTime();
       // on scaling, this should be moved to redis
-      global.app_tgju_rate_usd_tmn = 17000;
+      global.app_tgju_rate_usd_tmn = 20000;
     }
     return global.app_tgju_rate_usd_tmn;
   },

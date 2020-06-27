@@ -10,6 +10,7 @@ function irr_to_tmn(irr = 0) {
 }
 
 const service = {
+  // TODO: CHANGE TMN TO IRT (RENAME ONLY)
   tmn_to_usd,
   irr_to_tmn,
 };

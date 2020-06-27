@@ -24,7 +24,7 @@ exports.adapter = {
     let bidsConverted = bids.map((value) => {
       return {
         apiName: "nobitex",
-        type: "buy",
+        type: "sell",
         price: irr_to_tmn(value[0]),
         amount: value[1],
         total_price: irr_to_tmn(value[0] * value[1]),
@@ -34,7 +34,7 @@ exports.adapter = {
     let asksConverted = asks.map((value) => {
       return {
         apiName: "nobitex",
-        type: "sell",
+        type: "buy",
         price: irr_to_tmn(value[0]),
         amount: value[1],
         total_price: irr_to_tmn(value[0] * value[1]),

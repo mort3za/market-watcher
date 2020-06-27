@@ -2,6 +2,7 @@ const sortBy = require("lodash/sortBy");
 
 exports.service = {
   async analyze({ orders }) {
+    // exir
     let buysExir = [];
     let sellsExir = [];
     try {
@@ -12,6 +13,7 @@ exports.service = {
       sellsExir = sortBy(sellsExir, "price");
     } catch (error) {}
 
+    // nobitex
     let buysNobitex = [];
     let sellsNobitex = [];
     try {
@@ -27,6 +29,7 @@ exports.service = {
     const sellExirHead = sellsExir[0];
     const sellNobitexHead = sellsNobitex[0];
 
+    // console.log("buyExirHead, buyNobitexHead, sellExirHead, sellNobitexHead");
     // console.log(buyExirHead, buyNobitexHead, sellExirHead, sellNobitexHead);
 
     let hasGold = false;
