@@ -1,5 +1,10 @@
 const dictionary = {
   btc: ["bitcoin", "btc"],
+  eth: ["eth", "ethereum"],
+  xrp: ["xrp", "ripple"],
+  xmr: ["xmr", "monero"],
+  xlm: ["xlm", "stellar"],
+  bch: ["bch", "bitcoin-cash"],
   irt: ["toman", "tooman", "toomaan", "tmn", "irt"],
 };
 

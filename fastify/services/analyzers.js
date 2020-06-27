@@ -64,7 +64,7 @@ exports.service = {
     return {
       targetTrades,
       hasGold,
-      currency
+      currency,
     };
   },
 };

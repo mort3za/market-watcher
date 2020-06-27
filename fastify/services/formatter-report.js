@@ -4,7 +4,8 @@ const datefnsTz = require("date-fns-tz");
 exports.service = {
   toTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
     const totalPriceMin = Math.min(buyItem.total_price, sellItem.total_price);
-    const importanceEmoji = "🔥".repeat(parseInt(percentDiff));
+    const importanceEmoji =
+      percentDiff > 2 ? "🔥".repeat(parseInt(percentDiff)) : "";
 
     return (
       `<b>${currency.toUpperCase()}</b>\n` +

@@ -9,17 +9,16 @@ const { toTextMultiline } = require("../services/formatter-report.js").service;
 exports.watch = async (request, reply) => {
   let result;
   try {
-    // const orders = await latest_trades();
-    // const { hasGold, targetTrades } = await analyze({ orders });
+    const symbolsActive = process.env.CURRENCIES_ACTIVE.split(",");
 
     const orderbooks = [];
-    orderbooks.push(latest_orderbooks("btc", "irt"));
-    orderbooks.push(latest_orderbooks("usdt", "irt"));
+    symbolsActive.forEach((symbol) => {
+      orderbooks.push(latest_orderbooks(symbol, "irt"));
+    });
     const orderbooksResponse = await Promise.all(orderbooks);
 
-    const symbolds = ["btc", "usdt"];
     const analizeResults = [];
-    symbolds.forEach((symbol) => {
+    symbolsActive.forEach((symbol) => {
       const orders = orderbooksResponse.find((item) => item.symbol === symbol);
       analizeResults.push(
         analyze({
