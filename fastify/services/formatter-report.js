@@ -1,5 +1,6 @@
 const datefns = require("date-fns");
 const datefnsTz = require("date-fns-tz");
+const { round } = require("lodash");
 
 exports.service = {
   toTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
@@ -12,7 +13,7 @@ exports.service = {
       `Buy from ${sellItem.apiName} ${moneyFormatter(sellItem.price)}\n` +
       `Sell to ${buyItem.apiName} ${moneyFormatter(buyItem.price)}\n` +
       `You can trade at least ${moneyFormatter(totalPriceMin)}\n` +
-      `Difference is ${percentDiff.toFixed(3)}%\n` +
+      `Difference is ${round(percentDiff, 3)}%\n` +
       `<code>${datefns.format(
         datefnsTz.utcToZonedTime(buyItem.timestamp, "Asia/Tehran"),
         "MM/dd kk:mm"

@@ -65,6 +65,7 @@ exports.service = {
       targetTrades,
       hasGold,
       currency,
+      maxPercentDiff: Math.max(targetTrades.map((item) => item.percentDiff)),
     };
   },
 };
