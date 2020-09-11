@@ -4,7 +4,7 @@ Watch cryptocurrency markets and receive notifications when there is differences
 
 ## Supported Markets
 
-Currently Nobitext and Exir are supported but you can easily add your own APIs
+Currently Nobitext and Exir are supported. You can add your own APIs if you want (PRs are welcome!)
 
 ## Usage
 
