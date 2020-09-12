@@ -3,6 +3,8 @@
   "version": "0.2.0",
   "main": "api/index.js",
   "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod",
     "start": "nodemon ./server-local.js"
   },
   "dependencies": {
