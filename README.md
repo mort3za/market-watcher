@@ -2,7 +2,7 @@
 
 Watch cryptocurrency markets and receive notifications when there is differences in their prices.
 
-<img src="https://user-images.githubusercontent.com/510242/92992737-5a2f2400-f502-11ea-92a0-e1fc9161543a.png" alt="Telegram group notifications" />
+<img src="https://user-images.githubusercontent.com/510242/92996189-fe26c880-f51e-11ea-8671-f6d1ec949855.png" alt="Telegram group notifications" />
 
 ## Supported Markets
 

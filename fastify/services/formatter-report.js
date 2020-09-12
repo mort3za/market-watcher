@@ -10,12 +10,12 @@ exports.service = {
 
     return (
       `<b>${currency.toUpperCase()}</b>\n` +
-      `Buy from ${sellItem.apiName} ${moneyFormatter(sellItem.price)}\n` +
-      `Sell to ${buyItem.apiName} ${moneyFormatter(buyItem.price)}\n` +
-      `You can trade at least ${moneyFormatter(totalPriceMin)}\n` +
+      `${sellItem.apiName}: ${_moneyFormatter(sellItem.price)}\n` +
+      `${buyItem.apiName}: ${_moneyFormatter(buyItem.price)}\n` +
+      `Amount: ${_moneyFormatter(totalPriceMin)}\n` +
       `Difference is ${round(percentDiff, 3)}%\n` +
       `<code>${datefns.format(
-        datefnsTz.utcToZonedTime(buyItem.timestamp, "Asia/Tehran"),
+        datefnsTz.utcToZonedTime(buyItem.timestamp, _getUserTimeZone()),
         "MM/dd kk:mm"
       )}</code>\n` +
       `${importanceEmoji}`
@@ -23,6 +23,10 @@ exports.service = {
   },
 };
 
-function moneyFormatter(value) {
+function _getUserTimeZone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
+function _moneyFormatter(value) {
   return new Intl.NumberFormat("en-US", {}).format(value);
 }

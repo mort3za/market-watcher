@@ -1,3 +1,5 @@
+// SMS API
+// https://kavenegar.com/rest.html
 const { ajax } = require("../utils/ajax.js");
 const API_KEY_KAVENEGAR = process.env.API_KEY_KAVENEGAR;
 const SENDER = process.env.KAVENEGAR_NOTIFY_SENDER;

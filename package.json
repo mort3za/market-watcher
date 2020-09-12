@@ -1,5 +1,5 @@
 {
-  "name": "twatcher",
+  "name": "market-watcher",
   "version": "0.2.0",
   "main": "api/index.js",
   "scripts": {
