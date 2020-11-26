@@ -1,4 +1,4 @@
-const { round, capitalize, get } = require("lodash");
+const { round, capitalize, get, isNumber } = require("lodash");
 
 exports.service = {
   buySellToTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
@@ -41,6 +41,9 @@ function _getExchangeEmoji(exchange) {
   );
 }
 
-function _moneyFormatter(value = 0) {
+function _moneyFormatter(value) {
+  if (!isNumber(value)) {
+    return "-";
+  }
   return new Intl.NumberFormat("en-US", {}).format(value.toFixed(0));
 }
