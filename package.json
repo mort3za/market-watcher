@@ -1,6 +1,6 @@
 {
   "name": "market-watcher",
-  "version": "0.2.0",
+  "version": "2.0.0",
   "main": "api/index.js",
   "scripts": {
     "dev": "vercel dev",
@@ -8,16 +8,15 @@
     "start": "nodemon ./server-local.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "date-fns": "^2.14.0",
-    "date-fns-tz": "^1.0.10",
-    "fastify": "^2.14.1",
-    "lodash": "^4.17.15",
+    "axios": "^0.21.0",
+    "date-fns": "^2.16.1",
+    "fastify": "^2.15.3",
+    "lodash": "^4.17.20",
     "qs": "^6.9.4"
   },
   "devDependencies": {
     "dotenv": "~8.2.0",
-    "nodemon": "~2.0.4"
+    "nodemon": "~2.0.6"
   },
   "engines": {
     "node": ">= 12.x"
