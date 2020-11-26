@@ -23,21 +23,34 @@ exports.service = {
   },
 
   currencyPricePairsToTextMultiline({ exchange, currencyPricePairs = [] }) {
-    console.log("currencyPricePairs", currencyPricePairs);
-
     let pairsText = "";
     currencyPricePairs.forEach((pair) => {
-      pairsText += `${pair.symbol.toUpperCase()}: ${pair.trade.price}\n`;
+      pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(
+        pair.trade.price
+      )}\n`;
     });
 
-    return `<b>Latest Prices in ${capitalize(exchange)}</b>\n\n` + pairsText;
+    return (
+      `${_getExchangeEmoji(exchange)} <b>Latest Prices in ${capitalize(
+        exchange
+      )}</b>\n\n` + pairsText
+    );
   },
 };
+
+function _getExchangeEmoji(exchange) {
+  return (
+    {
+      exir: "🥂",
+      nobitex: "🥩",
+    }[exchange] || "🔘"
+  );
+}
 
 function _getUserTimeZone() {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
 function _moneyFormatter(value) {
-  return new Intl.NumberFormat("en-US", {}).format(value);
+  return new Intl.NumberFormat("en-US", {}).format(value.toFixed(0));
 }

@@ -6,32 +6,21 @@ const {
 const {
   currencyPricePairsToTextMultiline,
 } = require("../services/formatter-report.js").service;
-const { sortBy } = require("lodash");
+const { sortBy, groupBy, flatten } = require("lodash");
 
-exports.priceListNobitex = async (request, reply) => {
+exports.priceList = async (request, reply) => {
   let result;
   try {
-    const symbolsActive = process.env.CURRENCIES_ACTIVE.split(",");
+    const price_list_promises = [];
+    price_list_promises.push(_handlePriceList("nobitex"));
+    price_list_promises.push(_handlePriceList("exir"));
 
-    const trades = [];
-    symbolsActive.forEach((symbol) => {
-      trades.push(latest_trades(symbol, "irt", { exchanges: ["nobitex"] }));
-    });
-    const tradesResponse = await Promise.all(trades);
-    const pairs = [];
-    tradesResponse.forEach((trade) => {
-      pairs.push({
-        symbol: trade.symbol,
-        // todo: make this general, not just for nobitex (move to a fn)
-        trade: sortBy(trade.nobitex, ["timestamp", "total_price"]).reverse()[0],
-      });
-    });
-
-    _handleNotification({ pairs, exchange: "nobitex" });
+    let price_list = await Promise.all(price_list_promises);
+    price_list = groupBy(flatten(price_list), "symbol");
 
     result = {
       error: false,
-      data: { trades },
+      data: { price_list },
     };
   } catch (error) {
     console.log("error", error);
@@ -40,10 +29,31 @@ exports.priceListNobitex = async (request, reply) => {
   return reply.send(result);
 
   function onError(res, error) {
-    reply.status(400);
+    // note: 200 is because of preventing false down status in uptimerobot
+    reply.status(200);
     return { error: true, data: error };
   }
 };
+
+async function _handlePriceList(exchange) {
+  const symbolsActive = process.env.CURRENCIES_ACTIVE.split(",");
+
+  const trades = [];
+  symbolsActive.forEach((symbol) => {
+    trades.push(latest_trades(symbol, "irt", { exchanges: [exchange] }));
+  });
+  const tradesResponse = await Promise.all(trades);
+  const pairs = [];
+  tradesResponse.forEach((trade) => {
+    pairs.push({
+      symbol: trade.symbol,
+      trade: sortBy(trade[exchange], ["timestamp", "total_price"]).reverse()[0],
+    });
+  });
+
+  _handleNotification({ pairs, exchange });
+  return pairs;
+}
 
 function _handleNotification({ pairs, exchange }) {
   const textReport = currencyPricePairsToTextMultiline({
@@ -52,7 +62,7 @@ function _handleNotification({ pairs, exchange }) {
   });
   sendNotifications({
     telegram: true,
-    telegram_chat_id: process.env.TELEGRAM_PRICES_NOBITEXT_CHAT_ID,
+    telegram_chat_id: process.env.TELEGRAM_PRICES_CHANNEL_CHAT_ID,
     text: textReport,
   });
 }

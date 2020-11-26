@@ -68,17 +68,13 @@ exports.watch = async (request, reply) => {
   return reply.send(result);
 
   function onError(res, error) {
-    reply.status(400);
+    // note: 200 is because of preventing false down status in uptimerobot
+    reply.status(200);
     return { error: true, data: error };
   }
 };
 
-function _handleNotificationsDetails({
-  hasGold,
-  targetTrades,
-  currency,
-  maxPercentDiff,
-}) {
+function _handleNotificationsDetails({ hasGold, targetTrades, currency }) {
   if (hasGold) {
     targetTrades.forEach((targetTrade) => {
       const textReport = buySellToTextMultiline(currency, targetTrade);

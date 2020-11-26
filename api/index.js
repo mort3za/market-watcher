@@ -2,9 +2,8 @@
 "use strict";
 
 const fastify = require("fastify");
-const watchRoute = require("../fastify/routes/watch.js").watch;
-const priceListNobitex = require("../fastify/routes/priceList.js")
-  .priceListNobitex;
+const diffWatchRoute = require("../fastify/routes/watch.js").watch;
+const priceListRoute = require("../fastify/routes/priceList.js").priceList;
 
 function build() {
   const app = fastify({
@@ -17,8 +16,8 @@ function build() {
     return `Hello ${name}!`;
   });
 
-  app.get("/watch", watchRoute);
-  app.get("/priceListNobitex", priceListNobitex);
+  app.get("/diffWatch", diffWatchRoute);
+  app.get("/priceList", priceListRoute);
 
   return app;
 }
