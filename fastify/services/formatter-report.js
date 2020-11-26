@@ -1,9 +1,9 @@
 const datefns = require("date-fns");
 const datefnsTz = require("date-fns-tz");
-const { round } = require("lodash");
+const { round, capitalize } = require("lodash");
 
 exports.service = {
-  toTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
+  buySellToTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
     const totalPriceMin = Math.min(buyItem.total_price, sellItem.total_price);
     const importanceEmoji =
       percentDiff > 2 ? "🔥".repeat(parseInt(percentDiff)) : "";
@@ -20,6 +20,17 @@ exports.service = {
       )}</code>\n` +
       `${importanceEmoji}`
     );
+  },
+
+  currencyPricePairsToTextMultiline({ exchange, currencyPricePairs = [] }) {
+    console.log("currencyPricePairs", currencyPricePairs);
+
+    let pairsText = "";
+    currencyPricePairs.forEach((pair) => {
+      pairsText += `${pair.symbol.toUpperCase()}: ${pair.trade.price}\n`;
+    });
+
+    return `<b>Latest Prices in ${capitalize(exchange)}</b>\n\n` + pairsText;
   },
 };
 

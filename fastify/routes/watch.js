@@ -4,8 +4,10 @@ const {
 } = require("../services/trading-tools.js").service;
 const { sendNotifications } = require("../services/notifiers.js").service;
 const { analyze } = require("../services/analyzers.js").service;
-const { toTextMultiline } = require("../services/formatter-report.js").service;
-const SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
+const {
+  buySellToTextMultiline,
+} = require("../services/formatter-report.js").service;
+// const SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
 const PUSH_THRESHOLD_PERCENT = process.env.PUSH_THRESHOLD_PERCENT;
 const { round } = require("lodash");
 
@@ -79,7 +81,7 @@ function _handleNotificationsDetails({
 }) {
   if (hasGold) {
     targetTrades.forEach((targetTrade) => {
-      const textReport = toTextMultiline(currency, targetTrade);
+      const textReport = buySellToTextMultiline(currency, targetTrade);
       sendNotifications({ telegram: true, text: textReport });
     });
   }

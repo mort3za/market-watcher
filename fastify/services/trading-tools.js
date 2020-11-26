@@ -3,8 +3,8 @@ const serviceNobitex = require("./api-nobitex.js").service;
 const {
   addPriceUSD,
   addTotalPriceUSD,
-  filterIneffectivePrices,
-  filterIneffectiveDates,
+  // filterIneffectivePrices,
+  // filterIneffectiveDates,
 } = require("../utils/helper-trades.js");
 const adapterCurrencies = require("../adapters/currencies.js").adapter;
 const adapterExir = require("../adapters/exir.js").adapter;
@@ -12,11 +12,24 @@ const adapterNobitex = require("../adapters/nobitex.js").adapter;
 
 const service = {
   // trades
-  async latest_trades(symbolSrc = "btc", symbolDst = "irt") {
+  async latest_trades(
+    symbolSrc = "btc",
+    symbolDst = "irt",
+    { exchanges = ["all"] } = { exchanges: ["all"] }
+  ) {
+    let exir = [],
+      nobitex = [];
+    if (exchanges.includes("all") || exchanges.includes("exir")) {
+      exir = await _get_exir_trades_filtered(symbolSrc, symbolDst);
+    }
+    if (exchanges.includes("all") || exchanges.includes("nobitex")) {
+      nobitex = await _get_nobitex_trades_filtered(symbolSrc, symbolDst);
+    }
+
     const result = {
       symbol: symbolSrc,
-      exir: await _get_exir_trades_filtered(symbolSrc, symbolDst),
-      nobitex: await _get_nobitex_trades_filtered(symbolSrc, symbolDst),
+      exir,
+      nobitex,
     };
     return result;
   },

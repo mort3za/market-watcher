@@ -3,6 +3,8 @@
 
 const fastify = require("fastify");
 const watchRoute = require("../fastify/routes/watch.js").watch;
+const priceListNobitex = require("../fastify/routes/priceList.js")
+  .priceListNobitex;
 
 function build() {
   const app = fastify({
@@ -16,6 +18,7 @@ function build() {
   });
 
   app.get("/watch", watchRoute);
+  app.get("/priceListNobitex", priceListNobitex);
 
   return app;
 }

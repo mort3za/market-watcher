@@ -8,6 +8,7 @@ const RECEPTORS = process.env.KAVENEGAR_NOTIFY_NUMBERS.split(",").join(",");
 
 exports.service = {
   async sendNotifications({
+    telegram_chat_id = TELEGRAM_NOTIFY_GROUP_CHAT_ID,
     title = "",
     text = "",
     telegram = false,
@@ -18,7 +19,7 @@ exports.service = {
       try {
         await serviceTelegram.sendMessage({
           text,
-          chat_id: TELEGRAM_NOTIFY_GROUP_CHAT_ID,
+          chat_id: telegram_chat_id,
         });
       } catch (error) {
         console.log("Telegram notify error", error);
