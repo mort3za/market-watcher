@@ -31,7 +31,7 @@ exports.priceList = async (request, reply) => {
   function onError(res, error) {
     // note: 200 is because of preventing false down status in uptimerobot
     reply.status(200);
-    return { error: true, data: error };
+    return { error: true, data: JSON.stringify(error) };
   }
 };
 

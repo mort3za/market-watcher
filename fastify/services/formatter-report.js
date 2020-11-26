@@ -1,6 +1,4 @@
-const datefns = require("date-fns");
-const datefnsTz = require("date-fns-tz");
-const { round, capitalize } = require("lodash");
+const { round, capitalize, get } = require("lodash");
 
 exports.service = {
   buySellToTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
@@ -14,10 +12,6 @@ exports.service = {
       `${buyItem.apiName}: ${_moneyFormatter(buyItem.price)}\n` +
       `Amount: ${_moneyFormatter(totalPriceMin)}\n` +
       `Difference is ${round(percentDiff, 3)}%\n` +
-      `<code>${datefns.format(
-        datefnsTz.utcToZonedTime(buyItem.timestamp, _getUserTimeZone()),
-        "MM/dd kk:mm"
-      )}</code>\n` +
       `${importanceEmoji}`
     );
   },
@@ -26,7 +20,7 @@ exports.service = {
     let pairsText = "";
     currencyPricePairs.forEach((pair) => {
       pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(
-        pair.trade.price
+        get(pair, "trade.price")
       )}\n`;
     });
 
@@ -47,10 +41,6 @@ function _getExchangeEmoji(exchange) {
   );
 }
 
-function _getUserTimeZone() {
-  return Intl.DateTimeFormat().resolvedOptions().timeZone;
-}
-
-function _moneyFormatter(value) {
+function _moneyFormatter(value = 0) {
   return new Intl.NumberFormat("en-US", {}).format(value.toFixed(0));
 }
