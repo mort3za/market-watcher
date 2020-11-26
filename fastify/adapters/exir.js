@@ -1,7 +1,7 @@
-const currencies = require("./currencies.js").adapter;
+const { get } = require("lodash");
 
 exports.adapter = {
-  trades(values) {
+  trades(values = []) {
     return values.map((value) => {
       return {
         apiName: "exir",
@@ -15,8 +15,8 @@ exports.adapter = {
   },
 
   orderbook(response, symbol = "btc-irt") {
-    const bids = response[symbol].bids || [];
-    const asks = response[symbol].asks || [];
+    const bids = get(response, "[symbol].bids", []);
+    const asks = get(response, "[symbol].asks", []);
     const now = new Date().getTime();
 
     let bidsConverted = bids.map((value) => {

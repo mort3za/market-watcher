@@ -1,3 +1,4 @@
+const { get } = require("lodash");
 const { irr_to_irt } = require("../services/convertors.js").service;
 
 exports.adapter = {
@@ -17,8 +18,8 @@ exports.adapter = {
   },
 
   orderbook(response, symbol = "BTCIRT") {
-    const bids = response.bids || [];
-    const asks = response.asks || [];
+    const bids = get(response, "bids", []);
+    const asks = get(response, "asks", []);
     const now = new Date().getTime();
 
     let bidsConverted = bids.map((value) => {
