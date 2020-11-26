@@ -19,15 +19,17 @@ exports.service = {
   currencyPricePairsToTextMultiline({ exchange, currencyPricePairs = [] }) {
     let pairsText = "";
     currencyPricePairs.forEach((pair) => {
-      pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(
-        get(pair, "trade.price")
-      )}\n`;
+      const price = get(pair, "trade.price");
+      if (price) {
+        pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(
+          price
+        )}\n`;
+      }
     });
 
     return (
-      `${_getExchangeEmoji(exchange)} <b>Latest Prices in ${capitalize(
-        exchange
-      )}</b>\n\n` + pairsText
+      `${_getExchangeEmoji(exchange)} <b>${capitalize(exchange)}</b>\n\n` +
+      pairsText
     );
   },
 };
@@ -43,7 +45,7 @@ function _getExchangeEmoji(exchange) {
 
 function _moneyFormatter(value) {
   if (!isNumber(value)) {
-    return "-";
+    return null;
   }
   return new Intl.NumberFormat("en-US", {}).format(value.toFixed(0));
 }
