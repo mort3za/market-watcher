@@ -51,7 +51,7 @@ async function _handlePriceList(exchange) {
     });
   });
 
-  _handleNotification({ pairs, exchange });
+  await _handleNotification({ pairs, exchange });
   return pairs;
 }
 
@@ -60,7 +60,7 @@ function _handleNotification({ pairs, exchange }) {
     exchange,
     currencyPricePairs: pairs,
   });
-  sendNotifications({
+  return sendNotifications({
     telegram: true,
     telegram_chat_id: process.env.TELEGRAM_PRICES_CHANNEL_CHAT_ID,
     text: textReport,
