@@ -15,8 +15,8 @@ exports.adapter = {
   },
 
   orderbook(response, symbol = "btc-irt") {
-    const bids = get(response, "[symbol].bids", []);
-    const asks = get(response, "[symbol].asks", []);
+    const bids = get(response, `[${symbol}].bids`, []);
+    const asks = get(response, `[${symbol}].asks`, []);
     const now = new Date().getTime();
 
     let bidsConverted = bids.map((value) => {
