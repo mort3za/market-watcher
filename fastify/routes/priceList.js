@@ -1,9 +1,9 @@
-import { service as sendNotifications } from "../services/notifiers.js";
+import { sendNotifications } from "../services/notifiers.js";
 import {
   latest_trades,
   // latest_orderbooks,
 } from "../services/priceDiff.js";
-import { service as currencyPricePairsToTextMultiline } from "../services/formatter-report.js";
+import { currencyPricePairsToTextMultiline } from "../services/formatter-report.js";
 import lodash from "lodash";
 
 export const priceList = async (request, reply) => {

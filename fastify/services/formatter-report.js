@@ -1,39 +1,40 @@
 import lodash from "lodash";
 
-export const service = {
-  buySellToTextMultiline(currency, { buyItem, sellItem, percentDiff }) {
-    const totalPriceMin = Math.min(buyItem.total_price, sellItem.total_price);
-    const importanceEmoji =
-      percentDiff > 2 ? "🔥".repeat(parseInt(percentDiff)) : "";
+export function buySellToTextMultiline(
+  currency,
+  { buyItem, sellItem, percentDiff }
+) {
+  const totalPriceMin = Math.min(buyItem.total_price, sellItem.total_price);
+  const importanceEmoji =
+    percentDiff > 2 ? "🔥".repeat(parseInt(percentDiff)) : "";
 
-    return (
-      `<b>${currency.toUpperCase()}</b>\n` +
-      `${sellItem.apiName}: ${_moneyFormatter(sellItem.price)}\n` +
-      `${buyItem.apiName}: ${_moneyFormatter(buyItem.price)}\n` +
-      `Amount: ${_moneyFormatter(totalPriceMin)}\n` +
-      `Difference is ${lodash.round(percentDiff, 3)}%\n` +
-      `${importanceEmoji}`
-    );
-  },
+  return (
+    `<b>${currency.toUpperCase()}</b>\n` +
+    `${sellItem.apiName}: ${_moneyFormatter(sellItem.price)}\n` +
+    `${buyItem.apiName}: ${_moneyFormatter(buyItem.price)}\n` +
+    `Amount: ${_moneyFormatter(totalPriceMin)}\n` +
+    `Difference is ${lodash.round(percentDiff, 3)}%\n` +
+    `${importanceEmoji}`
+  );
+}
 
-  currencyPricePairsToTextMultiline({ exchange, currencyPricePairs = [] }) {
-    let pairsText = "";
-    currencyPricePairs.forEach((pair) => {
-      const price = lodash.get(pair, "trade.price");
-      if (price) {
-        pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(
-          price
-        )}\n`;
-      }
-    });
+export function currencyPricePairsToTextMultiline({
+  exchange,
+  currencyPricePairs = [],
+}) {
+  let pairsText = "";
+  currencyPricePairs.forEach((pair) => {
+    const price = lodash.get(pair, "trade.price");
+    if (price) {
+      pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(price)}\n`;
+    }
+  });
 
-    return (
-      `${_getExchangeEmoji(exchange)} <b>${lodash.capitalize(
-        exchange
-      )}</b>\n\n` + pairsText
-    );
-  },
-};
+  return (
+    `${_getExchangeEmoji(exchange)} <b>${lodash.capitalize(exchange)}</b>\n\n` +
+    pairsText
+  );
+}
 
 function _getExchangeEmoji(exchange) {
   return (

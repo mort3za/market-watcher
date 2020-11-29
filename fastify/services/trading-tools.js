@@ -1,5 +1,5 @@
-import { service as serviceExir } from "./api-exir.js";
-import { service as serviceNobitex } from "./api-nobitex.js";
+import serviceExir from "./api-exir.js";
+import serviceNobitex from "./api-nobitex.js";
 import {
   addPriceUSD,
   addTotalPriceUSD,

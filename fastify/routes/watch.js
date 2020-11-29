@@ -2,9 +2,9 @@ import {
   // latest_trades,
   latest_orderbooks,
 } from "../services/priceDiff.js";
-import { service as sendNotifications } from "../services/notifiers.js";
-import { service as analyze } from "../services/analyzers.js";
-import { service as buySellToTextMultiline } from "../services/formatter-report.js";
+import { sendNotifications } from "../services/notifiers.js";
+import { analyze } from "../services/analyzers.js";
+import { buySellToTextMultiline } from "../services/formatter-report.js";
 // import SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
 import lodash from "lodash";
 const PUSH_THRESHOLD_PERCENT = process.env.PUSH_THRESHOLD_PERCENT;

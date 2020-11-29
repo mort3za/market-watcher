@@ -2,7 +2,6 @@
 
 import dotenv from "dotenv";
 dotenv.config();
-console.log("dotenv.config", dotenv.config);
 
 import _app from "./api/index.js";
 

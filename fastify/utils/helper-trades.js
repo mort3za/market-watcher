@@ -1,4 +1,4 @@
-import { service as irt_to_usd } from "../services/convertors.js";
+import { irt_to_usd } from "../services/convertors.js";
 
 export const biggerThan = (orders, price = 0) => {
   const result = orders.filter((trade) => trade.price * trade.size > price);
