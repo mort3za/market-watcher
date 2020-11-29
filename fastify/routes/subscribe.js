@@ -1,4 +1,4 @@
-exports.subscribe = async (request, reply) => {
+export const subscribe = async (request, reply) => {
   const html = `
   <html><body>
   <p>Subscribe for push notifications</p>

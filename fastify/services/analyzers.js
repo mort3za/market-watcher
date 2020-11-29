@@ -1,16 +1,16 @@
-const sortBy = require("lodash/sortBy");
+import lodash from "lodash";
 
-exports.service = {
+export const service = {
   analyze({ orders, currency }) {
     // exir
     let buysExir = [];
     let sellsExir = [];
     try {
       buysExir = orders.exir.filter((trade) => trade.type === "buy");
-      buysExir = sortBy(buysExir, "price").reverse();
+      buysExir = lodash.sortBy(buysExir, "price").reverse();
 
       sellsExir = orders.exir.filter((trade) => trade.type === "sell");
-      sellsExir = sortBy(sellsExir, "price");
+      sellsExir = lodash.sortBy(sellsExir, "price");
     } catch (error) {}
 
     // nobitex
@@ -18,10 +18,10 @@ exports.service = {
     let sellsNobitex = [];
     try {
       buysNobitex = orders.nobitex.filter((trade) => trade.type === "buy");
-      buysNobitex = sortBy(buysNobitex, "price").reverse();
+      buysNobitex = lodash.sortBy(buysNobitex, "price").reverse();
 
       sellsNobitex = orders.nobitex.filter((trade) => trade.type === "sell");
-      sellsNobitex = sortBy(sellsNobitex, "price");
+      sellsNobitex = lodash.sortBy(sellsNobitex, "price");
     } catch (error) {}
 
     const buyExirHead = buysExir[0];

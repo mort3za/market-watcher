@@ -1,7 +1,7 @@
-const { ajax } = require("../utils/ajax.js");
+import { ajax } from "../utils/ajax.js";
 const API_KEY_TELEGRAM = process.env.API_KEY_TELEGRAM;
 
-exports.service = {
+export const service = {
   base_url: `https://api.telegram.org/bot${API_KEY_TELEGRAM}`,
 
   async sendMessage({ text, chat_id }) {
@@ -9,7 +9,7 @@ exports.service = {
       method: "GET",
       url: `${this.base_url}/sendMessage`,
       params: {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
         text,
         chat_id,
       },

@@ -1,7 +1,7 @@
 // https://apidocs.exir.io/#public
-const { ajax } = require("../utils/ajax.js");
+import { ajax } from "../utils/ajax.js";
 
-exports.service = {
+export const service = {
   base_url: "https://api.exir.io/v1",
   // ticker is last price traded
   async fetch_ticker(symbol = "btc-irt") {

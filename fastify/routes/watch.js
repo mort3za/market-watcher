@@ -1,17 +1,15 @@
-const {
+import {
   // latest_trades,
   latest_orderbooks,
-} = require("../services/trading-tools.js").service;
-const { sendNotifications } = require("../services/notifiers.js").service;
-const { analyze } = require("../services/analyzers.js").service;
-const {
-  buySellToTextMultiline,
-} = require("../services/formatter-report.js").service;
-// const SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
+} from "../services/priceDiff.js";
+import { service as sendNotifications } from "../services/notifiers.js";
+import { service as analyze } from "../services/analyzers.js";
+import { service as buySellToTextMultiline } from "../services/formatter-report.js";
+// import SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
+import lodash from "lodash";
 const PUSH_THRESHOLD_PERCENT = process.env.PUSH_THRESHOLD_PERCENT;
-const { round } = require("lodash");
 
-exports.watch = async (request, reply) => {
+export const watch = async (request, reply) => {
   let result;
   try {
     const symbolsActive = process.env.CURRENCIES_ACTIVE.split(",");
@@ -89,7 +87,7 @@ function _handleNotificationsSummary({
   maxPercentDiffAll,
 }) {
   if (foundAnyTarget) {
-    const maxPercentDiffAllPercent = `${round(maxPercentDiffAll, 2)}%`;
+    const maxPercentDiffAllPercent = `${lodash.round(maxPercentDiffAll, 2)}%`;
 
     if (maxPercentDiffAll > parseFloat(PUSH_THRESHOLD_PERCENT)) {
       const pushTextReport = targetCurrencies.join(", ");

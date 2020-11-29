@@ -1,19 +1,19 @@
-axios = require("axios");
-const { errorHandler } = require("./request-error-handler.js");
+import axios from "axios";
+import { errorHandler } from "./request-error-handler.js";
 
-const ajax = axios.create({
+const _ajax = axios.create({
   timeout: 9000,
   // withCredentials should be here and moving it to default headers wont work
-  withCredentials: false
+  withCredentials: false,
 });
 
-ajax.defaults.headers = {
-  "Content-Type": "application/json"
+_ajax.defaults.headers = {
+  "Content-Type": "application/json",
 };
 
-exports.ajax = async configs => {
+export const ajax = async (configs) => {
   try {
-    const result = await ajax(configs);
+    const result = await _ajax(configs);
     return result.data;
   } catch (error) {
     return errorHandler(error);

@@ -1,6 +1,6 @@
-const { get } = require("lodash");
+import lodash from "lodash";
 
-exports.adapter = {
+export const adapter = {
   trades(values = []) {
     return values.map((value) => {
       return {
@@ -15,8 +15,8 @@ exports.adapter = {
   },
 
   orderbook(response, symbol = "btc-irt") {
-    const bids = get(response, `[${symbol}].bids`, []);
-    const asks = get(response, `[${symbol}].asks`, []);
+    const bids = lodash.get(response, `[${symbol}].bids`, []);
+    const asks = lodash.get(response, `[${symbol}].asks`, []);
     const now = new Date().getTime();
 
     let bidsConverted = bids.map((value) => {

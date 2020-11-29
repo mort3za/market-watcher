@@ -1,12 +1,14 @@
 // telegram
-const serviceTelegram = require("./api-telegram.js").service;
-const servicePushAlert = require("./api-push-alert.js").service;
-const TELEGRAM_NOTIFY_GROUP_CHAT_ID = process.env.TELEGRAM_NOTIFY_GROUP_CHAT_ID;
+import { service as serviceTelegram } from "./api-telegram.js";
+import { service as servicePushAlert } from "./api-push-alert.js";
 // sms
-const serviceKavenegar = require("./api-kavenegar.js").service;
-const RECEPTORS = process.env.KAVENEGAR_NOTIFY_NUMBERS.split(",").join(",");
+import { service as serviceKavenegar } from "./api-kavenegar.js";
+const RECEPTORS = (process.env.KAVENEGAR_NOTIFY_NUMBERS || "")
+  .split(",")
+  .join(",");
+const TELEGRAM_NOTIFY_GROUP_CHAT_ID = process.env.TELEGRAM_NOTIFY_GROUP_CHAT_ID;
 
-exports.service = {
+export const service = {
   async sendNotifications({
     telegram_chat_id = TELEGRAM_NOTIFY_GROUP_CHAT_ID,
     title = "",

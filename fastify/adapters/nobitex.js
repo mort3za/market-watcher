@@ -1,7 +1,7 @@
-const { get } = require("lodash");
-const { irr_to_irt } = require("../services/convertors.js").service;
+import lodash from "lodash";
+import { irr_to_irt } from "../services/convertors.js";
 
-exports.adapter = {
+export const adapter = {
   trades(values = []) {
     return values.map((value) => {
       // rial to toman
@@ -18,8 +18,8 @@ exports.adapter = {
   },
 
   orderbook(response, symbol = "BTCIRT") {
-    const bids = get(response, "bids", []);
-    const asks = get(response, "asks", []);
+    const bids = lodash.get(response, "bids", []);
+    const asks = lodash.get(response, "asks", []);
     const now = new Date().getTime();
 
     let bidsConverted = bids.map((value) => {

@@ -1,14 +1,12 @@
-const { sendNotifications } = require("../services/notifiers.js").service;
-const {
+import { service as sendNotifications } from "../services/notifiers.js";
+import {
   latest_trades,
   // latest_orderbooks,
-} = require("../services/trading-tools.js").service;
-const {
-  currencyPricePairsToTextMultiline,
-} = require("../services/formatter-report.js").service;
-const { sortBy, groupBy, flatten } = require("lodash");
+} from "../services/priceDiff.js";
+import { service as currencyPricePairsToTextMultiline } from "../services/formatter-report.js";
+import lodash from "lodash";
 
-exports.priceList = async (request, reply) => {
+export const priceList = async (request, reply) => {
   let result;
   try {
     const price_list_promises = [];
@@ -16,7 +14,7 @@ exports.priceList = async (request, reply) => {
     price_list_promises.push(_handlePriceList("exir"));
 
     let price_list = await Promise.all(price_list_promises);
-    price_list = groupBy(flatten(price_list), "symbol");
+    price_list = lodash.groupBy(lodash.flatten(price_list), "symbol");
 
     result = {
       error: false,
@@ -47,7 +45,9 @@ async function _handlePriceList(exchange) {
   tradesResponse.forEach((trade) => {
     pairs.push({
       symbol: trade.symbol,
-      trade: sortBy(trade[exchange], ["timestamp", "total_price"]).reverse()[0],
+      trade: lodash
+        .sortBy(trade[exchange], ["timestamp", "total_price"])
+        .reverse()[0],
     });
   });
 

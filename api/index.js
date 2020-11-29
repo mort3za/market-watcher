@@ -1,9 +1,9 @@
 // serverless for vercel: https://www.fastify.io/docs/latest/Serverless/#vercel
 "use strict";
 
-const fastify = require("fastify");
-const diffWatchRoute = require("../fastify/routes/watch.js").watch;
-const priceListRoute = require("../fastify/routes/priceList.js").priceList;
+import fastify from "fastify";
+import { watch as diffWatchRoute } from "../fastify/routes/watch.js";
+import { priceList as priceListRoute } from "../fastify/routes/priceList.js";
 
 function build() {
   const app = fastify({
@@ -22,4 +22,4 @@ function build() {
   return app;
 }
 
-module.exports = build;
+export default build;

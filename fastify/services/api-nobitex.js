@@ -1,8 +1,8 @@
 // https://apidocs.nobitex.ir/#6528ce0c42
 // symbols: BTCIRT، ETHIRT، LTCIRT، XRPIRT، BCHIRT، BNBIRT، EOSIRT، XLMIRT، ETCIRT،‌ TRXIRT ،USDTIRT، BTCUSDT، ETHUSDT، LTCUSDT، XRPUSDT، BCHUSDT، BNBUSDT، EOSUSDT، XLMUSDT، ETCUSDT، TRXUSDT
-const { ajax } = require("../utils/ajax.js");
+import { ajax } from "../utils/ajax.js";
 
-exports.service = {
+export const service = {
   base_url: "https://api.nobitex.ir",
   async fetch_token({ username, password, remember = "yes" }) {
     return ajax({
@@ -12,7 +12,7 @@ exports.service = {
       data: { username, password, remember },
       headers: {
         // 'X-TOTP': 123456
-      }
+      },
     });
   },
 
