@@ -1,8 +1,6 @@
 "use strict";
 
-import dotenv from "dotenv";
-dotenv.config();
-
+import "./env.js";
 import _app from "./api/index.js";
 
 const app = _app();
