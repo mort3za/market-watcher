@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import { round, get, capitalize, isNumber } from "lodash";
 
 export function buySellToTextMultiline(
   currency,
@@ -13,7 +13,7 @@ export function buySellToTextMultiline(
     `${sellItem.apiName}: ${_moneyFormatter(sellItem.price)}\n` +
     `${buyItem.apiName}: ${_moneyFormatter(buyItem.price)}\n` +
     `Amount: ${_moneyFormatter(totalPriceMin)}\n` +
-    `Difference is ${lodash.round(percentDiff, 3)}%\n` +
+    `Difference is ${round(percentDiff, 3)}%\n` +
     `${importanceEmoji}`
   );
 }
@@ -24,14 +24,14 @@ export function currencyPricePairsToTextMultiline({
 }) {
   let pairsText = "";
   currencyPricePairs.forEach((pair) => {
-    const price = lodash.get(pair, "trade.price");
+    const price = get(pair, "trade.price");
     if (price) {
       pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(price)}\n`;
     }
   });
 
   return (
-    `${_getExchangeEmoji(exchange)} <b>${lodash.capitalize(exchange)}</b>\n\n` +
+    `${_getExchangeEmoji(exchange)} <b>${capitalize(exchange)}</b>\n\n` +
     pairsText
   );
 }
@@ -46,7 +46,7 @@ function _getExchangeEmoji(exchange) {
 }
 
 function _moneyFormatter(value) {
-  if (!lodash.isNumber(value)) {
+  if (!isNumber(value)) {
     return null;
   }
   return new Intl.NumberFormat("en-US", {}).format(value.toFixed(0));

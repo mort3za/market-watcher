@@ -4,7 +4,7 @@ import {
   // latest_orderbooks,
 } from "../services/priceDiff";
 import { currencyPricePairsToTextMultiline } from "../services/formatter-report";
-import lodash from "lodash";
+import { groupBy, sortBy, flatten } from "lodash";
 
 export const priceList = async (request, reply) => {
   let result;
@@ -14,7 +14,7 @@ export const priceList = async (request, reply) => {
     price_list_promises.push(_handlePriceList("exir"));
 
     let price_list = await Promise.all(price_list_promises);
-    price_list = lodash.groupBy(lodash.flatten(price_list), "symbol");
+    price_list = groupBy(flatten(price_list), "symbol");
 
     result = {
       error: false,
@@ -45,9 +45,7 @@ async function _handlePriceList(exchange) {
   tradesResponse.forEach((trade) => {
     pairs.push({
       symbol: trade.symbol,
-      trade: lodash
-        .sortBy(trade[exchange], ["timestamp", "total_price"])
-        .reverse()[0],
+      trade: sortBy(trade[exchange], ["timestamp", "total_price"]).reverse()[0],
     });
   });
 

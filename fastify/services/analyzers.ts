@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import { sortBy } from "lodash";
 
 export function analyze({ orders, currency }) {
   // exir
@@ -6,10 +6,10 @@ export function analyze({ orders, currency }) {
   let sellsExir = [];
   try {
     buysExir = orders.exir.filter((trade) => trade.type === "buy");
-    buysExir = lodash.sortBy(buysExir, "price").reverse();
+    buysExir = sortBy(buysExir, "price").reverse();
 
     sellsExir = orders.exir.filter((trade) => trade.type === "sell");
-    sellsExir = lodash.sortBy(sellsExir, "price");
+    sellsExir = sortBy(sellsExir, "price");
   } catch (error) {}
 
   // nobitex
@@ -17,10 +17,10 @@ export function analyze({ orders, currency }) {
   let sellsNobitex = [];
   try {
     buysNobitex = orders.nobitex.filter((trade) => trade.type === "buy");
-    buysNobitex = lodash.sortBy(buysNobitex, "price").reverse();
+    buysNobitex = sortBy(buysNobitex, "price").reverse();
 
     sellsNobitex = orders.nobitex.filter((trade) => trade.type === "sell");
-    sellsNobitex = lodash.sortBy(sellsNobitex, "price");
+    sellsNobitex = sortBy(sellsNobitex, "price");
   } catch (error) {}
 
   const buyExirHead = buysExir[0];

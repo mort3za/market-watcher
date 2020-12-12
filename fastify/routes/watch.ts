@@ -6,7 +6,7 @@ import { sendNotifications } from "../services/notifiers";
 import { analyze } from "../services/analyzers";
 import { buySellToTextMultiline } from "../services/formatter-report";
 // import SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
-import lodash from "lodash";
+import { round } from "lodash";
 const PUSH_THRESHOLD_PERCENT = process.env.PUSH_THRESHOLD_PERCENT;
 
 export const watch = async (request, reply) => {
@@ -87,7 +87,7 @@ function _handleNotificationsSummary({
   maxPercentDiffAll,
 }) {
   if (foundAnyTarget) {
-    const maxPercentDiffAllPercent = `${lodash.round(maxPercentDiffAll, 2)}%`;
+    const maxPercentDiffAllPercent = `${round(maxPercentDiffAll, 2)}%`;
 
     if (maxPercentDiffAll > parseFloat(PUSH_THRESHOLD_PERCENT)) {
       const pushTextReport = targetCurrencies.join(", ");
