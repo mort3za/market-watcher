@@ -15,7 +15,6 @@
     "qs": "^6.9.4"
   },
   "devDependencies": {
-    "@types/date-fns": "^2.6.0",
     "@types/lodash": "^4.14.165",
     "@vercel/node": "^1.8.5",
     "dotenv": "~8.2.0",
