@@ -1,11 +1,11 @@
 {
   "name": "market-watcher",
   "version": "2.0.1",
-  "main": "api/index.js",
+  "main": "api/index.ts",
   "scripts": {
     "dev": "vercel dev",
     "deploy": "vercel --prod",
-    "start": "nodemon ./server-local.js"
+    "start": "nodemon ./server-local.ts"
   },
   "type": "module",
   "dependencies": {
