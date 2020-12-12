@@ -1,8 +1,8 @@
 // telegram
-import serviceTelegram from "./api-telegram.js";
-import servicePushAlert from "./api-push-alert.js";
+import serviceTelegram from "./api-telegram";
+import servicePushAlert from "./api-push-alert";
 // sms
-import serviceKavenegar from "./api-kavenegar.js";
+import serviceKavenegar from "./api-kavenegar";
 const RECEPTORS = (process.env.KAVENEGAR_NOTIFY_NUMBERS || "")
   .split(",")
   .join(",");

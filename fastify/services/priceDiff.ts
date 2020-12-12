@@ -3,7 +3,7 @@ import {
   get_exir_orderbook_filtered,
   get_nobitex_orderbook_filtered,
   get_nobitex_trades_filtered,
-} from "./trading-tools.js";
+} from "./trading-tools";
 
 // trades
 export async function latest_trades(

@@ -1,10 +1,10 @@
 import {
   // latest_trades,
   latest_orderbooks,
-} from "../services/priceDiff.js";
-import { sendNotifications } from "../services/notifiers.js";
-import { analyze } from "../services/analyzers.js";
-import { buySellToTextMultiline } from "../services/formatter-report.js";
+} from "../services/priceDiff";
+import { sendNotifications } from "../services/notifiers";
+import { analyze } from "../services/analyzers";
+import { buySellToTextMultiline } from "../services/formatter-report";
 // import SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
 import lodash from "lodash";
 const PUSH_THRESHOLD_PERCENT = process.env.PUSH_THRESHOLD_PERCENT;

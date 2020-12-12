@@ -1,6 +1,6 @@
 "use strict";
 
-import "./env.js";
+import "./env";
 import _app from "./api/index";
 
 const app = _app();

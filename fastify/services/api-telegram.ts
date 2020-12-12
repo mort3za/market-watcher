@@ -1,4 +1,4 @@
-import { ajax } from "../utils/ajax.js";
+import { ajax } from "../utils/ajax";
 const API_KEY_TELEGRAM = process.env.API_KEY_TELEGRAM;
 
 const base_url = `https://api.telegram.org/bot${API_KEY_TELEGRAM}`;

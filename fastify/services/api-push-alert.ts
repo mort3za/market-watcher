@@ -1,4 +1,4 @@
-import { ajax } from "../utils/ajax.js";
+import { ajax } from "../utils/ajax";
 import qs from "qs";
 const API_KEY_PUSHALERT = process.env.API_KEY_PUSHALERT;
 const base_url = `https://api.pushalert.co/rest/v1`;

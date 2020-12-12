@@ -1,14 +1,14 @@
-import serviceExir from "./api-exir.js";
-import serviceNobitex from "./api-nobitex.js";
+import serviceExir from "./api-exir";
+import serviceNobitex from "./api-nobitex";
 import {
   addPriceUSD,
   addTotalPriceUSD,
   // filterIneffectivePrices,
   // filterIneffectiveDates,
-} from "../utils/helper-trades.js";
-import { adapter as adapterCurrencies } from "../adapters/currencies.js";
-import { adapter as adapterExir } from "../adapters/exir.js";
-import { adapter as adapterNobitex } from "../adapters/nobitex.js";
+} from "../utils/helper-trades";
+import { adapter as adapterCurrencies } from "../adapters/currencies";
+import { adapter as adapterExir } from "../adapters/exir";
+import { adapter as adapterNobitex } from "../adapters/nobitex";
 
 // ---------------------------------------------------------------------------------
 // private functions

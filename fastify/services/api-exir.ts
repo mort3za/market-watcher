@@ -1,5 +1,5 @@
 // https://apidocs.exir.io/#public
-import { ajax } from "../utils/ajax.js";
+import { ajax } from "../utils/ajax";
 const base_url = "https://api.exir.io/v1";
 
 // ticker is last price traded

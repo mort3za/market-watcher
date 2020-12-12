@@ -1,5 +1,5 @@
 import axios from "axios";
-import { errorHandler } from "./request-error-handler.js";
+import { errorHandler } from "./request-error-handler";
 
 const _ajax = axios.create({
   timeout: 9000,

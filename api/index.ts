@@ -2,8 +2,8 @@
 "use strict";
 
 import fastify from "fastify";
-import { watch as diffWatchRoute } from "../fastify/routes/watch.js";
-import { priceList as priceListRoute } from "../fastify/routes/priceList.js";
+import { watch as diffWatchRoute } from "../fastify/routes/watch";
+import { priceList as priceListRoute } from "../fastify/routes/priceList";
 
 function build() {
   const app = fastify({
