@@ -1,7 +1,7 @@
-const { get } = require("lodash");
-const { irr_to_irt } = require("../services/convertors.js").service;
+import { get } from "lodash";
+import { irr_to_irt } from "../services/convertors";
 
-exports.adapter = {
+export const adapter = {
   trades(values = []) {
     return values.map((value) => {
       // rial to toman

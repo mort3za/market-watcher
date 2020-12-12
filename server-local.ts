@@ -1,7 +1,7 @@
 "use strict";
 
-require("dotenv").config();
+import "./env";
+import _app from "./api/index";
 
-const app = require("./api/index")();
-
+const app = _app();
 app.listen(4000, () => console.log("http://localhost:4000"));

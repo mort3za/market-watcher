@@ -1,6 +1,6 @@
-const { get } = require("lodash");
+import { get } from "lodash";
 
-exports.adapter = {
+export const adapter = {
   trades(values = []) {
     return values.map((value) => {
       return {

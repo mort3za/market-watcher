@@ -8,7 +8,7 @@ const dictionary = {
   irt: ["irt", "toman", "tooman", "toomaan", "tuman", "tumaan", "tmn"],
 };
 
-const adapter = {
+export const adapter = {
   normalizeName(currency, options) {
     let result = "";
     for (const [key, value] of Object.entries(dictionary)) {
@@ -55,5 +55,3 @@ const adapter = {
     }
   },
 };
-
-exports.adapter = adapter;

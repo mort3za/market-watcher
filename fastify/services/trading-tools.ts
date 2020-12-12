@@ -1,54 +1,19 @@
-const serviceExir = require("./api-exir.js").service;
-const serviceNobitex = require("./api-nobitex.js").service;
-const {
+import serviceExir from "./api-exir";
+import serviceNobitex from "./api-nobitex";
+import {
   addPriceUSD,
   addTotalPriceUSD,
   // filterIneffectivePrices,
   // filterIneffectiveDates,
-} = require("../utils/helper-trades.js");
-const adapterCurrencies = require("../adapters/currencies.js").adapter;
-const adapterExir = require("../adapters/exir.js").adapter;
-const adapterNobitex = require("../adapters/nobitex.js").adapter;
-
-const service = {
-  // trades
-  async latest_trades(
-    symbolSrc = "btc",
-    symbolDst = "irt",
-    { exchanges = ["all"] } = { exchanges: ["all"] }
-  ) {
-    let exir = [],
-      nobitex = [];
-    if (exchanges.includes("all") || exchanges.includes("exir")) {
-      exir = await _get_exir_trades_filtered(symbolSrc, symbolDst);
-    }
-    if (exchanges.includes("all") || exchanges.includes("nobitex")) {
-      nobitex = await _get_nobitex_trades_filtered(symbolSrc, symbolDst);
-    }
-
-    const result = {
-      symbol: symbolSrc,
-      exir,
-      nobitex,
-    };
-    return result;
-  },
-
-  // orderbook
-  async latest_orderbooks(symbolSrc = "btc", symbolDst = "irt") {
-    const result = {
-      symbol: symbolSrc,
-      exir: await _get_exir_orderbook_filtered(symbolSrc, symbolDst),
-      nobitex: await _get_nobitex_orderbook_filtered(symbolSrc, symbolDst),
-    };
-    return result;
-  },
-};
+} from "../utils/helper-trades";
+import { adapter as adapterCurrencies } from "../adapters/currencies";
+import { adapter as adapterExir } from "../adapters/exir";
+import { adapter as adapterNobitex } from "../adapters/nobitex";
 
 // ---------------------------------------------------------------------------------
 // private functions
 // ---------------------------------------------------------------------------------
-async function _get_exir_orderbook_filtered(src, dst) {
+export async function get_exir_orderbook_filtered(src, dst) {
   const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
 
   let result;
@@ -65,7 +30,7 @@ async function _get_exir_orderbook_filtered(src, dst) {
   return result;
 }
 
-async function _get_nobitex_orderbook_filtered(src, dst) {
+export async function get_nobitex_orderbook_filtered(src, dst) {
   const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB", {
     useIRT: true,
   });
@@ -84,7 +49,7 @@ async function _get_nobitex_orderbook_filtered(src, dst) {
   return result;
 }
 
-async function _get_exir_trades_filtered(src, dst) {
+export async function get_exir_trades_filtered(src, dst) {
   const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
   let result;
   try {
@@ -105,7 +70,7 @@ async function _get_exir_trades_filtered(src, dst) {
   return result;
 }
 
-async function _get_nobitex_trades_filtered(src, dst) {
+export async function get_nobitex_trades_filtered(src, dst) {
   const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB", {
     useIRT: true,
   });
@@ -127,5 +92,3 @@ async function _get_nobitex_trades_filtered(src, dst) {
 
   return result;
 }
-
-exports.service = service;

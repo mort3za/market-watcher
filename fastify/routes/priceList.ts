@@ -1,14 +1,12 @@
-const { sendNotifications } = require("../services/notifiers.js").service;
-const {
+import { sendNotifications } from "../services/notifiers";
+import {
   latest_trades,
   // latest_orderbooks,
-} = require("../services/trading-tools.js").service;
-const {
-  currencyPricePairsToTextMultiline,
-} = require("../services/formatter-report.js").service;
-const { sortBy, groupBy, flatten } = require("lodash");
+} from "../services/priceDiff";
+import { currencyPricePairsToTextMultiline } from "../services/formatter-report";
+import { groupBy, sortBy, flatten } from "lodash";
 
-exports.priceList = async (request, reply) => {
+export const priceList = async (request, reply) => {
   let result;
   try {
     const price_list_promises = [];
