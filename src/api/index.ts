@@ -4,6 +4,7 @@
 import fastify from "fastify";
 import { watch as diffWatchRoute } from "../fastify/routes/watch";
 import { priceList as priceListRoute } from "../fastify/routes/priceList";
+import { subscribe as subscribeRoute } from "../fastify/routes/subscribe";
 
 function build() {
   const app = fastify({
@@ -18,6 +19,7 @@ function build() {
 
   app.get("/diffWatch", diffWatchRoute);
   app.get("/priceList", priceListRoute);
+  app.get("/subscribe", subscribeRoute);
 
   return app;
 }

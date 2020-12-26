@@ -2,12 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/serverless.ts",
+      "src": "src/api/serverless.ts",
       "use": "@now/node",
       "config": {
         "helpers": false
       }
     }
   ],
-  "routes": [{ "src": "/.*", "dest": "/api/serverless.ts" }]
+  "routes": [{ "src": "/.*", "dest": "/src/api/serverless.ts" }]
 }
