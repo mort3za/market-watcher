@@ -6,31 +6,33 @@ import {
 import { currencyPricePairsToTextMultiline } from "../services/formatter-report";
 import { groupBy, sortBy, flatten } from "lodash";
 
-export const priceList = async (request, reply) => {
-  let result;
-  try {
-    const price_list_promises = [];
-    price_list_promises.push(_handlePriceList("nobitex"));
-    price_list_promises.push(_handlePriceList("exir"));
+const routes = async function routes(fastify, options) {
+  fastify.get("/priceList", async (request, reply) => {
+    let result;
+    try {
+      const price_list_promises = [];
+      price_list_promises.push(_handlePriceList("nobitex"));
+      price_list_promises.push(_handlePriceList("exir"));
 
-    let price_list = await Promise.all(price_list_promises);
-    price_list = groupBy(flatten(price_list), "symbol");
+      let price_list = await Promise.all(price_list_promises);
+      price_list = groupBy(flatten(price_list), "symbol");
 
-    result = {
-      error: false,
-      data: { price_list },
-    };
-  } catch (error) {
-    console.log("error", error);
-    result = onError(reply, error);
-  }
-  return reply.send(result);
+      result = {
+        error: false,
+        data: { price_list },
+      };
+    } catch (error) {
+      console.log("error", error);
+      result = onError(reply, error);
+    }
+    return reply.send(result);
 
-  function onError(res, error) {
-    // note: 200 is because of preventing false down status in uptimerobot
-    reply.status(200);
-    return { error: true, data: JSON.stringify(error) };
-  }
+    function onError(res, error) {
+      // note: 200 is because of preventing false down status in uptimerobot
+      reply.status(200);
+      return { error: true, data: JSON.stringify(error) };
+    }
+  });
 };
 
 async function _handlePriceList(exchange) {
@@ -64,3 +66,5 @@ function _handleNotification({ pairs, exchange }) {
     text: textReport,
   });
 }
+
+export default routes;
