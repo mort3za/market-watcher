@@ -7,7 +7,7 @@ export async function sendMessage({ title, text }) {
   const data = qs.stringify({
     title,
     message: text,
-    url: "https://google.com",
+    // url: "https://google.com",
   });
 
   return await ajax({

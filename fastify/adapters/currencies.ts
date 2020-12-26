@@ -9,7 +9,7 @@ const dictionary = {
 };
 
 export const adapter = {
-  normalizeName(currency, options) {
+  normalizeName(currency) {
     let result = "";
     for (const [key, value] of Object.entries(dictionary)) {
       if (value.includes(currency.toLowerCase())) {
@@ -36,7 +36,7 @@ export const adapter = {
   },
 
   // format options: AB, a-b
-  exchangeSymbol(source, destination, format, options) {
+  exchangeSymbol(source, destination, format) {
     switch (format) {
       case "a-b":
         return `${adapter.normalizeName(source)}-${adapter.normalizeName(
@@ -48,10 +48,9 @@ export const adapter = {
           .toUpperCase()}${adapter.normalizeName(destination).toUpperCase()}`;
 
       default:
-        return `${adapter.normalizeName(
-          source,
-          normalizeOptions
-        )}-${adapter.normalizeName(destination)}`;
+        return `${adapter.normalizeName(source)}-${adapter.normalizeName(
+          destination
+        )}`;
     }
   },
 };

@@ -45,9 +45,9 @@ function _getExchangeEmoji(exchange) {
   );
 }
 
-function _moneyFormatter(value) {
+function _moneyFormatter(value: number): string | null {
   if (!isNumber(value)) {
     return null;
   }
-  return new Intl.NumberFormat("en-US", {}).format(value.toFixed(0));
+  return new Intl.NumberFormat("en-US", {}).format(Number(value.toFixed(0)));
 }

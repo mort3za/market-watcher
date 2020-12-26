@@ -13,7 +13,7 @@ import { adapter as adapterNobitex } from "../adapters/nobitex";
 // ---------------------------------------------------------------------------------
 // private functions
 // ---------------------------------------------------------------------------------
-export async function get_exir_orderbook_filtered(src, dst) {
+export async function get_exir_orderbook_filtered(src: string, dst: string) {
   const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
 
   let result;
@@ -30,10 +30,8 @@ export async function get_exir_orderbook_filtered(src, dst) {
   return result;
 }
 
-export async function get_nobitex_orderbook_filtered(src, dst) {
-  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB", {
-    useIRT: true,
-  });
+export async function get_nobitex_orderbook_filtered(src: string, dst: string) {
+  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB");
 
   let result;
   try {
@@ -49,7 +47,7 @@ export async function get_nobitex_orderbook_filtered(src, dst) {
   return result;
 }
 
-export async function get_exir_trades_filtered(src, dst) {
+export async function get_exir_trades_filtered(src: string, dst: string) {
   const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
   let result;
   try {
@@ -71,9 +69,7 @@ export async function get_exir_trades_filtered(src, dst) {
 }
 
 export async function get_nobitex_trades_filtered(src, dst) {
-  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB", {
-    useIRT: true,
-  });
+  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB");
   let result;
   try {
     result = await serviceNobitex.fetch_trades(symbol);
