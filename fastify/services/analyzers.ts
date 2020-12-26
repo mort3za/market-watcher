@@ -36,8 +36,9 @@ export function analyze({ orders, currency }) {
   const threshold = parseFloat(process.env.TARGET_THRESHOLD_PERCENT);
 
   if (buyExirHead && sellNobitexHead) {
-    const priceDiff = buyExirHead.price - sellNobitexHead.price;
-    const percentDiff = (priceDiff / buyExirHead.price) * 100;
+    const priceDiff = Math.abs(buyExirHead.price - sellNobitexHead.price);
+    const percentDiff = Math.abs((priceDiff / buyExirHead.price) * 100);
+
     if (percentDiff > threshold) {
       targetTrades.push({
         buyItem: buyExirHead,
@@ -48,8 +49,9 @@ export function analyze({ orders, currency }) {
     }
   }
   if (buyNobitexHead && sellExirHead) {
-    const priceDiff = buyNobitexHead.price - sellExirHead.price;
-    const percentDiff = (priceDiff / buyNobitexHead.price) * 100;
+    const priceDiff = Math.abs(buyNobitexHead.price - sellExirHead.price);
+    const percentDiff = Math.abs((priceDiff / buyNobitexHead.price) * 100);
+
     if (percentDiff > threshold) {
       targetTrades.push({
         buyItem: buyNobitexHead,
@@ -60,10 +62,17 @@ export function analyze({ orders, currency }) {
     }
   }
 
+  const maxPercentDiff = Math.max(
+    0,
+    ...targetTrades.map((item) => {
+      return item.percentDiff;
+    })
+  );
+
   return {
     targetTrades,
     hasGold,
     currency,
-    maxPercentDiff: Math.max(targetTrades.map((item) => item.percentDiff)),
+    maxPercentDiff,
   };
 }
