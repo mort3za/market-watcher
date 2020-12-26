@@ -11,15 +11,15 @@ function build() {
     logger: true,
   });
 
-  app.get("/", async (req, res) => {
+  app.get("/api/", async (req, res) => {
     const { name = "World" } = req.query;
     req.log.info({ name }, "hello world!");
     return `Hello ${name}!`;
   });
 
-  app.get("/diffWatch", diffWatchRoute);
-  app.get("/priceList", priceListRoute);
-  app.get("/subscribe", subscribeRoute);
+  app.get("/api/diffWatch", diffWatchRoute);
+  app.get("/api/priceList", priceListRoute);
+  app.get("/api/subscribe", subscribeRoute);
 
   return app;
 }
