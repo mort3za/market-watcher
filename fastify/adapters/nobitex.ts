@@ -17,13 +17,13 @@ export const adapter = {
     });
   },
 
-  orderbook(response, symbol = "BTCIRT") {
+  orderbook(response, symbol = "BTCIRT"): OrderbookItem[] {
     const bids = get(response, "bids", []);
     const asks = get(response, "asks", []);
     const now = new Date().getTime();
 
-    let bidsConverted = bids.map((value) => {
-      return {
+    let bidsConverted: OrderbookItem[] = bids.map((value) => {
+      const obItem: OrderbookItem = {
         apiName: "nobitex",
         type: "sell",
         price: irr_to_irt(value[0]),
@@ -31,9 +31,10 @@ export const adapter = {
         total_price: irr_to_irt(value[0] * value[1]),
         timestamp: now,
       };
+      return obItem;
     });
-    let asksConverted = asks.map((value) => {
-      return {
+    let asksConverted: OrderbookItem[] = asks.map((value) => {
+      const obItem: OrderbookItem = {
         apiName: "nobitex",
         type: "buy",
         price: irr_to_irt(value[0]),
@@ -41,6 +42,7 @@ export const adapter = {
         total_price: irr_to_irt(value[0] * value[1]),
         timestamp: now,
       };
+      return obItem;
     });
 
     return [...bidsConverted, ...asksConverted];
