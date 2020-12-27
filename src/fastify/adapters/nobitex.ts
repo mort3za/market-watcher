@@ -17,7 +17,7 @@ export const adapter = {
     });
   },
 
-  orderbook(response, symbol = "BTCIRT"): OrderbookItem[] {
+  orderbook(response, { symbolSrc, symbolDst }): OrderbookItem[] {
     const bids = get(response, "bids", []);
     const asks = get(response, "asks", []);
     const now = new Date().getTime();

@@ -1,6 +1,7 @@
 // https://apidocs.nobitex.ir/#6528ce0c42
 // symbols: BTCIRT، ETHIRT، LTCIRT، XRPIRT، BCHIRT، BNBIRT، EOSIRT، XLMIRT، ETCIRT،‌ TRXIRT ،USDTIRT، BTCUSDT، ETHUSDT، LTCUSDT، XRPUSDT، BCHUSDT، BNBUSDT، EOSUSDT، XLMUSDT، ETCUSDT، TRXUSDT
 import { ajax } from "../utils/ajax";
+import { adapter as adapterCurrencies } from "../adapters/currencies";
 const base_url = "https://api.nobitex.ir";
 
 export async function fetch_token({ username, password, remember = "yes" }) {
@@ -15,12 +16,21 @@ export async function fetch_token({ username, password, remember = "yes" }) {
   });
 }
 
-export async function fetch_orderbooks(symbol = "BTCIRT") {
+export async function fetch_orderbooks({ symbolSrc, symbolDst }) {
+  if (symbolSrc === symbolDst) {
+    return;
+  }
+
+  const symbolPair = adapterCurrencies.exchangeSymbol(
+    symbolSrc,
+    symbolDst,
+    "AB"
+  );
   return ajax({
     method: "POST",
     url: `${base_url}/v2/orderbook`,
     data: {
-      symbol,
+      symbol: symbolPair,
     },
   });
   // exampleResponse = {
@@ -36,14 +46,27 @@ export async function fetch_orderbooks(symbol = "BTCIRT") {
   // };
 }
 
-export async function fetch_trades(symbol = "BTCIRT") {
+// todo: get symbolSrc and symbolDst separately, then generate symbolPair here
+export async function fetch_trades({ symbolSrc, symbolDst }) {
+  if (!_isParamsValid({ symbolSrc, symbolDst })) {
+    return [];
+  }
+
+  const symbolPair = adapterCurrencies.exchangeSymbol(
+    symbolSrc,
+    symbolDst,
+    "AB"
+  );
+
   // NOTE: max 15req/min
   return ajax({
     method: "POST",
     url: `${base_url}/v2/trades`,
     data: {
-      symbol,
+      symbol: symbolPair,
     },
+  }).then((response) => {
+    return response.trades;
   });
   // exampleResponse = {
   //   status: "ok",
@@ -64,13 +87,17 @@ export async function fetch_trades(symbol = "BTCIRT") {
   // };
 }
 
-export async function fetch_stats(srcCurrency = "btc", dstCurrency = "rls") {
+export async function fetch_stats({ symbolSrc, symbolDst }) {
+  if (!_isParamsValid({ symbolSrc, symbolDst })) {
+    return [];
+  }
+
   return ajax({
     method: "POST",
     url: `${base_url}/market/stats`,
     data: {
-      srcCurrency,
-      dstCurrency,
+      srcCurrency: symbolSrc,
+      dstCurrency: symbolDst,
     },
   });
   // exampleResponse = {
@@ -121,6 +148,16 @@ export async function fetch_profile() {
       Authorization: `Token ${process.env.TOKEN_NOBITEX}`,
     },
   });
+}
+
+function _isParamsValid({ symbolSrc, symbolDst }) {
+  if (symbolSrc === symbolDst) {
+    return false;
+  }
+  if (!process.env.CURRENCIES_ACTIVE_NOBITEX?.split(",").includes(symbolSrc)) {
+    return false;
+  }
+  return true;
 }
 
 export default {

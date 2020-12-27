@@ -15,7 +15,7 @@ const routes = async function routes(fastify, options) {
       price_list_promises.push(_handlePriceList("exir"));
 
       let price_list = await Promise.all(price_list_promises);
-      price_list = groupBy(flatten(price_list), "symbol");
+      price_list = groupBy(flatten(price_list), "symbolSrc");
 
       result = {
         error: false,
@@ -37,16 +37,24 @@ const routes = async function routes(fastify, options) {
 
 async function _handlePriceList(exchange) {
   const symbolsActive = process.env.CURRENCIES_ACTIVE.split(",");
+  const symbolsStable = process.env.CURRENCIES_STABLE.split(",");
 
   const trades = [];
-  symbolsActive.forEach((symbol) => {
-    trades.push(latest_trades(symbol, "irt", { exchanges: [exchange] }));
+  // btc, eth, ...
+  symbolsActive.forEach((symbolActive) => {
+    // usdt, irt
+    symbolsStable.forEach((symbolStable) => {
+      trades.push(
+        latest_trades(symbolActive, symbolStable, { exchanges: [exchange] })
+      );
+    });
   });
   const tradesResponse = await Promise.all(trades);
   const pairs = [];
   tradesResponse.forEach((trade) => {
     pairs.push({
-      symbol: trade.symbol,
+      symbolSrc: trade.symbolSrc,
+      symbolDst: trade.symbolDst,
       trade: sortBy(trade[exchange], ["timestamp", "total_price"]).reverse()[0],
     });
   });

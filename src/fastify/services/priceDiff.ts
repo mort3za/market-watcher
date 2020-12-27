@@ -21,7 +21,8 @@ export async function latest_trades(
   }
 
   const result = {
-    symbol: symbolSrc,
+    symbolSrc: symbolSrc,
+    symbolDst: symbolDst,
     exir,
     nobitex,
   };

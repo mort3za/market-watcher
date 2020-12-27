@@ -26,7 +26,9 @@ export function currencyPricePairsToTextMultiline({
   currencyPricePairs.forEach((pair) => {
     const price = get(pair, "trade.price");
     if (price) {
-      pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(price)}\n`;
+      pairsText += `${pair.symbolSrc.toUpperCase()}: ${_moneyFormatter(
+        price
+      )}\n`;
     }
   });
 
@@ -40,7 +42,7 @@ function _getExchangeEmoji(exchange) {
   return (
     {
       exir: "🥂",
-      nobitex: "🥩",
+      nobitex: "💢",
     }[exchange] || "🔘"
   );
 }

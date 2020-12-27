@@ -1,14 +1,22 @@
+import { adapter as adapterCurrencies } from "../adapters/currencies";
+
 // https://apidocs.exir.io/#public
 import { ajax } from "../utils/ajax";
 const base_url = "https://api.exir.io/v1";
 
 // ticker is last price traded
-export async function fetch_ticker(symbol = "btc-irt") {
+export async function fetch_ticker({ symbolSrc, symbolDst }) {
+  const symbolPair = adapterCurrencies.exchangeSymbol(
+    symbolSrc,
+    symbolDst,
+    "a-b"
+  );
+
   return ajax({
     method: "GET",
     url: `${base_url}/ticker`,
     params: {
-      symbol,
+      symbol: symbolPair,
     },
   });
   // exampleResponse = {
@@ -16,12 +24,22 @@ export async function fetch_ticker(symbol = "btc-irt") {
   // };
 }
 
-export async function fetch_orderbooks(symbol = "btc-irt") {
+export async function fetch_orderbooks({ symbolSrc, symbolDst }) {
+  if (!_isParamsValid({ symbolSrc, symbolDst })) {
+    return [];
+  }
+
+  const symbolPair = adapterCurrencies.exchangeSymbol(
+    symbolSrc,
+    symbolDst,
+    "a-b"
+  );
+
   return ajax({
     method: "GET",
     url: `${base_url}/orderbooks`,
     params: {
-      symbol,
+      symbol: symbolPair,
     },
   });
   // exampleResponse = {
@@ -56,14 +74,24 @@ export async function fetch_orderbooks(symbol = "btc-irt") {
   // };
 }
 
-export async function fetch_trades(symbol = "btc-irt") {
+export async function fetch_trades({ symbolSrc, symbolDst }) {
+  if (!_isParamsValid({ symbolSrc, symbolDst })) {
+    return [];
+  }
+
+  const symbolPair = adapterCurrencies.exchangeSymbol(
+    symbolSrc,
+    symbolDst,
+    "a-b"
+  );
+
   return ajax({
     method: "GET",
     url: `${base_url}/trades`,
     params: {
-      symbol,
+      symbol: symbolPair,
     },
-  });
+  }).then((response) => response[symbolPair]);
   // exampleResponse = {
   //   btc: [
   //     {
@@ -86,6 +114,16 @@ export async function fetch_trades(symbol = "btc-irt") {
   //     },
   //   ],
   // };
+}
+
+function _isParamsValid({ symbolSrc, symbolDst }) {
+  if (symbolSrc === symbolDst) {
+    return false;
+  }
+  if (!process.env.CURRENCIES_ACTIVE_EXIR?.split(",").includes(symbolSrc)) {
+    return false;
+  }
+  return true;
 }
 
 export default {

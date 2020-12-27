@@ -1,4 +1,5 @@
 import { get } from "lodash";
+import { adapter as adapterCurrencies } from "../adapters/currencies";
 
 export const adapter = {
   trades(values = []): TradeItem[] {
@@ -15,9 +16,15 @@ export const adapter = {
     });
   },
 
-  orderbook(response, symbol = "btc-irt"): OrderbookItem[] {
-    const bids = get(response, `[${symbol}].bids`, []);
-    const asks = get(response, `[${symbol}].asks`, []);
+  orderbook(response, { symbolSrc, symbolDst }): OrderbookItem[] {
+    const symbolPair = adapterCurrencies.exchangeSymbol(
+      symbolSrc,
+      symbolDst,
+      "a-b"
+    );
+
+    const bids = get(response, `[${symbolPair}].bids`, []);
+    const asks = get(response, `[${symbolPair}].asks`, []);
     const now = new Date().getTime();
 
     let bidsConverted: OrderbookItem[] = bids.map((value) => {
