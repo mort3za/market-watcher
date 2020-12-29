@@ -7,9 +7,9 @@
     "deploy": "vercel --prod"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "date-fns": "^2.16.1",
-    "fastify": "^3.8.0",
+    "fastify": "^3.9.2",
     "lodash": "^4.17.20",
     "qs": "^6.9.4"
   },

@@ -1,4 +1,4 @@
-import { round, get, capitalize, isNumber } from "lodash";
+import { round, get, capitalize, isNumber, groupBy } from "lodash";
 
 export function buySellToTextMultiline(
   currency,
@@ -23,12 +23,21 @@ export function currencyPricePairsToTextMultiline({
   currencyPricePairs = [],
 }) {
   let pairsText = "";
-  currencyPricePairs.forEach((pair) => {
-    const price = get(pair, "trade.price");
-    if (price) {
-      pairsText += `${pair.symbol.toUpperCase()}: ${_moneyFormatter(price)}\n`;
-    }
-  });
+  const grouped = groupBy(currencyPricePairs, "symbolDst");
+  const symbolDstList = Object.keys(grouped);
+
+  for (const symbolDst of symbolDstList) {
+    pairsText += `<b>🔹 Prices in ${symbolDst.toUpperCase()}</b>\n`;
+    grouped[symbolDst].forEach((pair) => {
+      const price = get(pair, "trade.price");
+      if (price) {
+        pairsText += `${pair.symbolSrc.toUpperCase()}: ${_moneyFormatter(
+          price
+        )}\n`;
+      }
+    });
+    pairsText += "\n";
+  }
 
   return (
     `${_getExchangeEmoji(exchange)} <b>${capitalize(exchange)}</b>\n\n` +
@@ -40,14 +49,16 @@ function _getExchangeEmoji(exchange) {
   return (
     {
       exir: "🥂",
-      nobitex: "🥩",
+      nobitex: "💢",
     }[exchange] || "🔘"
   );
 }
 
-function _moneyFormatter(value: number): string | null {
+function _moneyFormatter(value: number, toFixed = 5): string | null {
   if (!isNumber(value)) {
     return null;
   }
-  return new Intl.NumberFormat("en-US", {}).format(Number(value.toFixed(0)));
+  return new Intl.NumberFormat("en-US", {}).format(
+    Number(value.toFixed(toFixed))
+  );
 }

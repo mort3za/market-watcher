@@ -13,13 +13,16 @@ import { adapter as adapterNobitex } from "../adapters/nobitex";
 // ---------------------------------------------------------------------------------
 // private functions
 // ---------------------------------------------------------------------------------
-export async function get_exir_orderbook_filtered(src: string, dst: string) {
-  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
 
+// exir, orderbooks
+export async function get_exir_orderbook_filtered(
+  symbolSrc: string,
+  symbolDst: string
+) {
   let result;
   try {
-    result = await serviceExir.fetch_orderbooks(symbol);
-    result = adapterExir.orderbook(result, symbol);
+    result = await serviceExir.fetch_orderbooks({ symbolSrc, symbolDst });
+    result = adapterExir.orderbook(result, { symbolSrc, symbolDst });
   } catch (error) {
     throw error;
   }
@@ -30,13 +33,18 @@ export async function get_exir_orderbook_filtered(src: string, dst: string) {
   return result;
 }
 
-export async function get_nobitex_orderbook_filtered(src: string, dst: string) {
-  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB");
-
+// nobitex, orderbooks
+export async function get_nobitex_orderbook_filtered(
+  symbolSrc: string,
+  symbolDst: string
+) {
   let result;
   try {
-    result = await serviceNobitex.fetch_orderbooks(symbol);
-    result = adapterNobitex.orderbook(result, symbol);
+    const orderbooks = await serviceNobitex.fetch_orderbooks({
+      symbolSrc,
+      symbolDst,
+    });
+    result = adapterNobitex.orderbook(orderbooks, { symbolSrc, symbolDst });
   } catch (error) {
     throw error;
   }
@@ -47,12 +55,14 @@ export async function get_nobitex_orderbook_filtered(src: string, dst: string) {
   return result;
 }
 
-export async function get_exir_trades_filtered(src: string, dst: string) {
-  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "a-b");
+// exir, trades
+export async function get_exir_trades_filtered(
+  symbolSrc: string,
+  symbolDst: string
+) {
   let result;
   try {
-    result = await serviceExir.fetch_trades(symbol);
-    result = result[symbol];
+    result = await serviceExir.fetch_trades({ symbolSrc, symbolDst });
     result = adapterExir.trades(result);
   } catch (error) {
     throw error;
@@ -68,12 +78,14 @@ export async function get_exir_trades_filtered(src: string, dst: string) {
   return result;
 }
 
-export async function get_nobitex_trades_filtered(src, dst) {
-  const symbol = adapterCurrencies.exchangeSymbol(src, dst, "AB");
+// nobitex, trades
+export async function get_nobitex_trades_filtered(
+  symbolSrc: string,
+  symbolDst: string
+) {
   let result;
   try {
-    result = await serviceNobitex.fetch_trades(symbol);
-    result = result.trades;
+    result = await serviceNobitex.fetch_trades({ symbolSrc, symbolDst });
   } catch (error) {
     throw error;
   }

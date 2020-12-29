@@ -10,15 +10,15 @@
     "lib": ["es6"],
     "allowJs": true,
     "outDir": "build",
-    "rootDir": "fastify",
+    "rootDir": "src/fastify",
     "strict": true,
     "noImplicitAny": false,
     "types": ["node", "@types/jest"],
-    "typeRoots": ["./node_modules/@types", "./fastify/types"],
+    "typeRoots": ["./node_modules/@types", "./src/fastify/types"],
     "paths": {
-      "*": ["node_modules/*", "fastify/types/*"]
+      "*": ["node_modules/*", "src/fastify/types/*"]
     }
   },
-  "include": ["fastify/**/*"],
-  "exclude": ["fastify/**/*.spec.ts"]
+  "include": ["src/fastify/**/*"],
+  "exclude": ["src/fastify/**/*.spec.ts"]
 }

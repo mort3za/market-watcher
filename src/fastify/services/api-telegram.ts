@@ -3,7 +3,7 @@ const API_KEY_TELEGRAM = process.env.API_KEY_TELEGRAM;
 
 const base_url = `https://api.telegram.org/bot${API_KEY_TELEGRAM}`;
 
-export async function sendMessage({ text, chat_id }) {
+export function sendMessage({ text, chat_id }) {
   return ajax({
     method: "GET",
     url: `${base_url}/sendMessage`,
@@ -12,6 +12,9 @@ export async function sendMessage({ text, chat_id }) {
       text,
       chat_id,
     },
+  }).then((res) => {
+    // console.log("Telegram response", res);
+    return res;
   });
 }
 
