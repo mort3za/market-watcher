@@ -50,9 +50,9 @@ async function _handlePriceList(exchange) {
   const trades = [];
 
   // btc, eth, ...
-  symbolsActive.forEach((symbolActive) => {
+  symbolsActive?.forEach((symbolActive) => {
     // usdt, irt
-    symbolsStable.forEach((symbolStable) => {
+    symbolsStable?.forEach((symbolStable) => {
       trades.push(
         latest_trades(symbolActive, symbolStable, { exchanges: [exchange] })
       );

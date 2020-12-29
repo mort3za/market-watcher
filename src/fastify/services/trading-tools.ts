@@ -63,7 +63,7 @@ export async function get_exir_trades_filtered(
   let result;
   try {
     result = await serviceExir.fetch_trades({ symbolSrc, symbolDst });
-    result = adapterExir.trades(result);
+    result = adapterExir.trades(result, symbolDst);
   } catch (error) {
     throw error;
   }
@@ -89,7 +89,7 @@ export async function get_nobitex_trades_filtered(
   } catch (error) {
     throw error;
   }
-  result = adapterNobitex.trades(result);
+  result = adapterNobitex.trades(result, symbolDst);
   // TODO: move to adapter nobitex
   result = await addPriceUSD(result);
   result = await addTotalPriceUSD(result);

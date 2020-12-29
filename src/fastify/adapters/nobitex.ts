@@ -2,10 +2,13 @@ import { get } from "lodash";
 import { irr_to_irt } from "../services/convertors";
 
 export const adapter = {
-  trades(values = []) {
+  trades(values = [], symbolDst) {
     return values.map((value) => {
       // rial to toman
-      const price = irr_to_irt(value.price);
+      const price = Number(
+        symbolDst === "irt" ? irr_to_irt(value.price) : value.price
+      );
+
       return {
         apiName: "nobitex",
         type: value.type,
