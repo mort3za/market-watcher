@@ -1,4 +1,5 @@
 import { sortBy } from "lodash";
+const { TARGET_THRESHOLD_PERCENT } = process.env;
 
 export function analyze({ orders, currency }) {
   // exir
@@ -33,7 +34,7 @@ export function analyze({ orders, currency }) {
 
   let hasGold = false;
   let targetTrades = [];
-  const threshold = parseFloat(process.env.TARGET_THRESHOLD_PERCENT);
+  const threshold = parseFloat(TARGET_THRESHOLD_PERCENT);
 
   if (buyExirHead && sellNobitexHead) {
     const priceDiff = Math.abs(buyExirHead.price - sellNobitexHead.price);

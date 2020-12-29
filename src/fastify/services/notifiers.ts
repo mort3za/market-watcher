@@ -8,17 +8,18 @@ const RECEPTORS = (process.env.KAVENEGAR_NOTIFY_NUMBERS || "")
   .join(",");
 const TELEGRAM_NOTIFY_GROUP_CHAT_ID = process.env.TELEGRAM_NOTIFY_GROUP_CHAT_ID;
 
-export async function sendNotifications({
+export function sendNotifications({
   telegram_chat_id = TELEGRAM_NOTIFY_GROUP_CHAT_ID,
   title = "",
   text = "",
   telegram = false,
   push = false,
   sms = false,
-}) {
+}): Promise<Object>[] {
+  let promise1;
   if (telegram) {
     try {
-      await serviceTelegram.sendMessage({
+      promise1 = serviceTelegram.sendMessage({
         text,
         chat_id: telegram_chat_id,
       });
@@ -27,19 +28,23 @@ export async function sendNotifications({
     }
   }
 
+  let promise2;
   if (push) {
     try {
-      await servicePushAlert.sendMessage({ text, title });
+      promise2 = servicePushAlert.sendMessage({ text, title });
     } catch (error) {
       console.log("Push notify error", error);
     }
   }
 
+  let promise3;
   if (sms) {
     try {
-      await serviceKavenegar.sendMessage({ text, receptors: RECEPTORS });
+      promise3 = serviceKavenegar.sendMessage({ text, receptors: RECEPTORS });
     } catch (error) {
       console.log("SMS notify error", error);
     }
   }
+
+  return [promise1, promise2, promise3];
 }

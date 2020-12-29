@@ -6,8 +6,8 @@ import { sendNotifications } from "../services/notifiers";
 import { analyze } from "../services/analyzers";
 import { buySellToTextMultiline } from "../services/formatter-report";
 // import SMS_THRESHOLD_PERCENT = process.env.SMS_THRESHOLD_PERCENT;
-import { round } from "lodash";
-const PUSH_THRESHOLD_PERCENT = process.env.PUSH_THRESHOLD_PERCENT;
+import { flatten, round } from "lodash";
+const { PUSH_THRESHOLD_PERCENT } = process.env;
 
 const routes = async function routes(fastify, options) {
   fastify.get("/diffWatch", async (request, reply) => {
@@ -23,9 +23,9 @@ const routes = async function routes(fastify, options) {
 
       const analizeResults = [];
       symbolsActive.forEach((symbol) => {
-        const orders = orderbooksResponse.find(
-          (item) => item.symbol === symbol
-        );
+        const orders = orderbooksResponse.find((item) => {
+          return item.symbol === symbol;
+        });
         analizeResults.push(
           analyze({
             currency: symbol,
@@ -45,13 +45,19 @@ const routes = async function routes(fastify, options) {
         return max;
       }, 0);
 
-      analizeResults.forEach((item) => {
+      let notificationPromises: Promise<Object | undefined>[] = [];
+      for (let i = 0; i < analizeResults.length; i++) {
+        const item = analizeResults[i];
         if (item.hasGold) {
           targetCurrencies.push(item.currency);
           foundAnyTarget = true;
+          notificationPromises.push(..._handleNotificationsDetails(item));
         }
-        _handleNotificationsDetails(item);
-      });
+      }
+      const _prms = notificationPromises.filter(Boolean);
+      // fixme: handle {status: 429, data: {ok:false}} in telegram response.
+      await Promise.all(_prms);
+
       _handleNotificationsSummary({
         foundAnyTarget,
         targetCurrencies,
@@ -76,15 +82,20 @@ const routes = async function routes(fastify, options) {
   });
 };
 
-function _handleNotificationsDetails({ hasGold, targetTrades, currency }) {
-  if (hasGold) {
-    targetTrades.forEach((targetTrade) => {
-      const textReport = buySellToTextMultiline(currency, targetTrade);
-      sendNotifications({ telegram: true, text: textReport });
-    });
-  }
+// solo notifications for every item
+function _handleNotificationsDetails({
+  targetTrades,
+  currency,
+}): Promise<Object>[] {
+  let promises = [];
+  targetTrades.forEach(async (targetTrade) => {
+    const textReport = buySellToTextMultiline(currency, targetTrade);
+    promises.push(sendNotifications({ telegram: true, text: textReport }));
+  });
+  return flatten(promises);
 }
 
+// summary notification
 function _handleNotificationsSummary({
   foundAnyTarget,
   targetCurrencies,
@@ -92,9 +103,10 @@ function _handleNotificationsSummary({
 }) {
   if (foundAnyTarget) {
     const maxPercentDiffAllPercent = `${round(maxPercentDiffAll, 2)}%`;
-
-    if (maxPercentDiffAll > parseFloat(PUSH_THRESHOLD_PERCENT)) {
+    const shouldSend = maxPercentDiffAll > parseFloat(PUSH_THRESHOLD_PERCENT);
+    if (shouldSend) {
       const pushTextReport = targetCurrencies.join(", ");
+      // send push notification
       sendNotifications({
         push: true,
         title: `Watcher ${maxPercentDiffAllPercent}`,
