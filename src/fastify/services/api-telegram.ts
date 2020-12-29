@@ -13,7 +13,7 @@ export function sendMessage({ text, chat_id }) {
       chat_id,
     },
   }).then((res) => {
-    console.log("Telegram response", res);
+    // console.log("Telegram response", res);
     return res;
   });
 }
