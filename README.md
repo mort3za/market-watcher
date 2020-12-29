@@ -2,8 +2,6 @@
 
 Watch cryptocurrency markets and receive notifications when there is differences in their prices.
 
-<img src="https://user-images.githubusercontent.com/510242/92996189-fe26c880-f51e-11ea-8671-f6d1ec949855.png" alt="Telegram group notifications" />
-
 ## Supported Markets
 
 Currently Nobitext and Exir are supported. You can add your own APIs if you want (PRs are welcome!)
