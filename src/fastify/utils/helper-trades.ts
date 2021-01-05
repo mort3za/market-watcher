@@ -23,14 +23,6 @@ export const addTotalPriceUSD = async (orders) => {
   );
 };
 
-export const filterIneffectivePrices = (
-  orders,
-  basedOnProperty = "total_price_usd",
-  amount = 300
-) => {
-  return orders.filter((item) => item[basedOnProperty] > amount);
-};
-
 export const filterIneffectiveDates = (
   orders,
   basedOnProperty = "timestamp"

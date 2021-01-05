@@ -1,5 +1,5 @@
 import { get } from "lodash";
-import { irr_to_irt } from "../services/convertors";
+import { irr_to_irt } from "../../../services/convertors";
 
 export const adapter = {
   trades(values = [], symbolDst) {

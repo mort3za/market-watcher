@@ -1,5 +1,5 @@
 import { get } from "lodash";
-import { adapter as adapterCurrencies } from "../adapters/currencies";
+import { adapter as adapterCurrencies } from "../../../adapters/currency-names";
 
 export const adapter = {
   trades(values = []): TradeItem[] {
