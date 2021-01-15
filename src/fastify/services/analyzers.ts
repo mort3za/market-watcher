@@ -37,8 +37,8 @@ export function analyze({ orders, currency }) {
   const threshold = parseFloat(TARGET_THRESHOLD_PERCENT);
 
   if (buyExirHead && sellNobitexHead) {
-    const priceDiff = Math.abs(buyExirHead.price - sellNobitexHead.price);
-    const percentDiff = Math.abs((priceDiff / buyExirHead.price) * 100);
+    const priceDiff = buyExirHead.price - sellNobitexHead.price;
+    const percentDiff = (priceDiff / buyExirHead.price) * 100;
 
     if (percentDiff > threshold) {
       targetTrades.push({
@@ -50,8 +50,8 @@ export function analyze({ orders, currency }) {
     }
   }
   if (buyNobitexHead && sellExirHead) {
-    const priceDiff = Math.abs(buyNobitexHead.price - sellExirHead.price);
-    const percentDiff = Math.abs((priceDiff / buyNobitexHead.price) * 100);
+    const priceDiff = buyNobitexHead.price - sellExirHead.price;
+    const percentDiff = (priceDiff / buyNobitexHead.price) * 100;
 
     if (percentDiff > threshold) {
       targetTrades.push({
